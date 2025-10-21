@@ -1,18 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import TextType from "./shared/components/TextType";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="flex flex-col mx-auto w-[600px] justify-start ">
-      <h1>Vite + React</h1>
-      <p className="ml-5">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="flex flex-col mx-auto w-[550px] mt-20 justify-start">
+      <h1>Richard Huang</h1>
+      <div className="w-md mt-5 mb-5">
+        <TextType
+          text={[
+            "I am a software developer..",
+            "I love coding",
+            "Welcome to my portfolio",
+            "Let's connect!",
+            "Feel free to reach out via email or LinkedIn.",
+            "Thank you for visiting my site!",
+            "Have a great day!",
+            "Goodbye!",
+          ]}
+        />
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
