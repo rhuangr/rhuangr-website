@@ -1,5 +1,8 @@
 
 @import "tailwindcss";
+@import "./shared/fonts/playfair-display.css";
+@import "./shared/fonts/roboto-condensed.css";
+@import "./shared/fonts/eb-garamond.css";
 
 :root {
   font-family: sans-serif;
@@ -7,8 +10,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgb(251, 250, 246);
-  background-color: #131212;
+  color: rgb(255, 255, 255);
+  background-color: #131111;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,19 +32,16 @@ body {
   font-size: normal;
   line-height: 1.2;
   margin-top: 0.5em;
-  font-weight: 500;
-  font-family: "Playfair Display", Garamond, serif;
+  font-weight: 400;
+  font-family: "EB Garamond", serif;
   font-style: normal;
 }
 
 h1 {
-  font-size: 6em;
+  font-size: 5em;
   line-height: 1.0;
-  font-family: "Playfair Display", Garamond, serif;
+  font-family: "Playfair Display";
   font-style: normal;
-  font-weight: 600;
+  font-weight: 800;
 }
 
-@import "./shared/fonts/playfair-display.css";
-@import "./shared/fonts/roboto-condensed.css";
-@import "./shared/fonts/eb-garamond.css";

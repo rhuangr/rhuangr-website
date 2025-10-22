@@ -1,16 +1,20 @@
 
-@font-face {
-  font-family: 'EB Garamond';
-  font-style: normal;
-  font-weight: 100 800;
-  src: url('/fonts/EB_Garamond/static/EBGaramond-Regular.ttf') format('truetype');
-  font-display: swap;
-}
+/* EB Garamond font-face declarations
+   Files are served from the Vite `public` folder, so use absolute paths starting with /fonts
+*/
 
 @font-face {
   font-family: 'EB Garamond';
   font-style: italic;
   font-weight: 100 800;
-  src: url('/fonts/EB_Garamond/static/EBGaramond-Italic.ttf') format('truetype');
+  src: url('/fonts/EB_Garamond/EBGaramond-Italic-VariableFont_wght.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 100 800;
+  src: url('/fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf') format('truetype');
   font-display: swap;
 }

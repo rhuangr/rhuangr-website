@@ -1,6 +1,7 @@
 import type { ElementType } from 'react';
 import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
 import { gsap } from 'gsap';
+import "../../bubble.css"
 
 interface TextTypeProps {
   className?: string;
@@ -24,7 +25,7 @@ interface TextTypeProps {
 const TextType = ({
   text,
   as: Component = 'div',
-  typingSpeed = 50,
+  typingSpeed = 45,
   initialDelay = 0,
   pauseBetweenLines = 800,
   className = '',
@@ -46,6 +47,7 @@ const TextType = ({
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [isVisible, setIsVisible] = useState(!startOnVisible);
+  const [isTypingBubbleAnimating, setIsTypingBubbleAnimating] = useState(false);
   const cursorRef = useRef<HTMLSpanElement | null>(null);
   const containerRef = useRef<HTMLElement | null>(null);
 
@@ -70,6 +72,8 @@ const TextType = ({
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            setIsTypingBubbleAnimating(true);
+            setTimeout(() => setIsTypingBubbleAnimating(false), 200);
           }
         });
       },
@@ -81,17 +85,11 @@ const TextType = ({
   }, [startOnVisible]);
 
   useEffect(() => {
-    if (showCursor && cursorRef.current && !isComplete) {
-      gsap.set(cursorRef.current, { opacity: 1 });
-      gsap.to(cursorRef.current, {
-        opacity: 0,
-        duration: cursorBlinkDuration,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power2.inOut'
-      });
+    if (!startOnVisible) {
+      setIsTypingBubbleAnimating(true);
+      setTimeout(() => setIsTypingBubbleAnimating(false), 200);
     }
-  }, [showCursor, cursorBlinkDuration, isComplete]);
+  }, [startOnVisible]);
 
   useEffect(() => {
     if (!isVisible || isComplete) return;
@@ -124,6 +122,10 @@ const TextType = ({
 
         // Check if there are more lines
         if (currentLineIndex < textArray.length - 1) {
+          // Start animation for new typing bubble
+          setIsTypingBubbleAnimating(true);
+          setTimeout(() => setIsTypingBubbleAnimating(false), 200);
+          
           // Move to next line
           setCurrentLineIndex(prev => prev + 1);
           setCurrentLineText('');
@@ -164,27 +166,34 @@ const TextType = ({
     },
     <>
       {completedLines.map((line, index) => (
-        <div
-          key={index}
-          className={`whitespace-pre-wrap m-2 ${lineClassName}`}
-          style={textColors.length > 0 ? { color: getLineColor(index) } : undefined}
-        >
-          {line}
+        <div key={index} className="bubble say">
+          <div className="bubble-content">
+            <div
+              className={`whitespace-pre-wrap ${lineClassName}`}
+              style={textColors.length > 0 ? { color: getLineColor(index) } : undefined}
+            >
+              {line}
+            </div>
+          </div>
         </div>
       ))}
       {!isComplete && (
-        <div className={`whitespace-pre-wrap m-2 ${lineClassName}`}>
-          <span style={textColors.length > 0 ? { color: getLineColor(currentLineIndex) } : undefined}>
-            {currentLineText}
-          </span>
-          {showCursor && (
-            <span
-              ref={cursorRef}
-              className={`ml-1 inline-block opacity-100 ${cursorClassName}`}
-            >
-              {cursorCharacter}
-            </span>
-          )}
+        <div className={`bubble say ${isTypingBubbleAnimating ? 'imagine' : ''}`}>
+          <div className="bubble-content">
+            <div className={`whitespace-pre-wrap ${lineClassName}`}>
+              <span style={textColors.length > 0 ? { color: getLineColor(currentLineIndex) } : undefined}>
+                {currentLineText}
+              </span>
+              {showCursor && (
+                <span
+                  ref={cursorRef}
+                  className={`ml-1 inline-block opacity-100 ${cursorClassName}`}
+                >
+                  {cursorCharacter}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </>

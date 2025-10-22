@@ -5,55 +5,15 @@
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
-  font-weight: 300;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Light.ttf') format('truetype');
+  font-weight: 100 800;
+  src: url('/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Roboto Condensed';
   font-style: italic;
-  font-weight: 300;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-LightItalic.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: italic;
-  font-weight: 400;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Italic.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 500;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Medium.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Bold.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 900;
-  src: url('/fonts/Roboto_Condensed/static/RobotoCondensed-Black.ttf') format('truetype');
+  font-weight: 100 800;
+  src: url('/fonts/Roboto_Condensed/RobotoCondensed-Italic-VariableFont_wght.ttf') format('truetype');
   font-display: swap;
 }
