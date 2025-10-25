@@ -8,7 +8,7 @@ export const Leader = ({ className }: LeaderProps) => {
       className={`flex-1 ml-3 mt-0.5 h-px ${className}`}
       style={{
         backgroundImage:
-          "repeating-linear-gradient(to right, #ffefcb32 0 4px, transparent 4px 7px)"
+          "repeating-linear-gradient(to right, #fff9f25b 0 4px, transparent 4px 7px)"
       }}
     ></div>
   );

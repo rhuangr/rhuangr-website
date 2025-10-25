@@ -1,6 +1,6 @@
 ### General Instructions
 
-- NEVER add comments in simple code changes. Only add comments when the change creates many new functions that build upon eachother or a complex components.
+- NEVER add comments UNLESS specifically instructed to do so.
 
 ### Styling Instructions
 

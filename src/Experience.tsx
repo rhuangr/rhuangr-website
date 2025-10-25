@@ -47,7 +47,7 @@ function ExperienceCard({
 export function Experience() {
   return (
     <div>
-      <div className="flex items-center justify-between w-full pb-5">
+      <div className="flex items-center justify-between w-full mb-10">
         <h2>Experience</h2>
         <Leader />
       </div>
@@ -66,7 +66,7 @@ export function Experience() {
         />
         <ExperienceCard
           image={
-            <div className="outline-dashed outline-3 rounded-xs h-7 w-7"></div>
+            <div className="outline-dashed outline-3 rounded-xs h-7 w-7 mt-1"></div>
           }
           heading="More to come"
           subheading="Hopefully!"

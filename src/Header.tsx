@@ -43,10 +43,11 @@ export function Header() {
   return (
     <header>
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-lg font-[650]">
+        <h1 className="font-[650]">
           <GradientText
-            colors={["#ffd940ff", "#9c40ff", "#ffaa40"]}
-            animationSpeed={7}
+            colors={["#ffd940ff", "#e57220ff", "#ffa340ff", "#ffdf40ff"]}
+            animationSpeed={8}
+            className="text-[27px] font-[650]"
           >
             rhuangr
           </GradientText>
