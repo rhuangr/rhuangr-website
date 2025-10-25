@@ -1,5 +1,5 @@
 import { ArrowUpRight, Copy } from "lucide-react";
-import { TextShimmer } from "./components/TextShimmer";
+import { GradientText } from "./components/GradientText";
 
 interface ContactLinkProps {
   href?: string;
@@ -26,7 +26,7 @@ function ContactLink({
         className={commonClasses}
       >
         {children}
-        <Icon className="inline-block w-4 h-4 ml-1" />
+        <Icon className="inline-block w-4 h-4 text-muted-foreground" />
       </a>
     );
   }
@@ -34,7 +34,7 @@ function ContactLink({
   return (
     <button type="button" onClick={onClick} className={commonClasses}>
       {children}
-      <Icon className="inline-block w-4 h-4 ml-1" />
+      <Icon className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
     </button>
   );
 }
@@ -43,15 +43,15 @@ export function Header() {
   return (
     <header>
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-4xl font-[650]">
-          <TextShimmer
-            spread={4}
-            className="dark:[--base-gradient-color:var(--amber-shimmer)]"
+        <h1 className="text-lg font-[650]">
+          <GradientText
+            colors={["#ffd940ff", "#9c40ff", "#ffaa40"]}
+            animationSpeed={7}
           >
             rhuangr
-          </TextShimmer>
+          </GradientText>
         </h1>
-        <div className="flex space-x-2 text-muted-foreground">
+        <div className="flex text-[12px] space-x-2 text-foreground">
           <ContactLink href="https://github.com/rhuangr" icon={ArrowUpRight}>
             Github
           </ContactLink>
@@ -70,6 +70,9 @@ export function Header() {
             Mail
           </ContactLink>
         </div>
+      </div>
+      <div className="text-[11px] text-muted-foreground">
+        last updated: 2025-10-25
       </div>
     </header>
   );

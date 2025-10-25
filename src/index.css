@@ -4,6 +4,7 @@
 @import "./shared/fonts/eb-garamond.css";
 @import "./shared/fonts/pp-neue-montreal.css";
 @import "./shared/fonts/inter.css";
+@import "./shared/fonts/uncut-sans.css";
 @import "tw-animate-css";
 
 @keyframes shine {
@@ -18,7 +19,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --amber : rgb(255, 220, 41);
+  --amber : rgb(255, 186, 57);
   --amber-shimmer: rgba(254, 218, 87, 0.792);
   --muted-amber: oklch(46.268% 0.0672 97.554);
   --amber-glow: oklch(0.82 0.17 80 / 0.15);
@@ -54,6 +55,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+
 }
 
 #root{
@@ -67,9 +70,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-size: 13px;
-  line-height: 1.5;
   font-weight: 500;
-  font-family: "Inter", sans-serif;
+  font-family: "Uncut Sans", sans-serif;
   color: var(--foreground);
 }
 
@@ -79,7 +81,7 @@ h1 {
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   color: var(--muted-foreground);
 }
@@ -132,7 +134,7 @@ h2 {
 
 .dark {
   --background: oklch(0.16 0.007 250);
-  --foreground: oklch(98.273% 0.02062 88.71);
+  --foreground: oklch(99.26% 0.01448 98.34);
   --card: oklch(29.704% 0.02551 320.601 / 0.23);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -140,9 +142,9 @@ h2 {
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
+  --secondary-foreground: oklch(92.246% 0.01781 89.35);
   --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted-foreground: oklch(70.062% 0.00269 47.562);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
@@ -164,34 +166,14 @@ h2 {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Blend scrollbars with your theme colors */
-html {
-  /* Firefox: thin + set thumb and track colors (thumb first, track second) */
-  scrollbar-width: thin;
-  scrollbar-color: var(--card) var(--background);
+@theme {
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  --animate-gradient: gradient 8s linear infinite;
 }
-
-/* WebKit (Chrome / Edge / Safari) */
-*::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--background); 
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--card); 
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
-}
-
 
 @layer base {
   * {

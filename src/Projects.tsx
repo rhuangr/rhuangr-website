@@ -1,4 +1,5 @@
 import { Card } from "./components/ui/card";
+import { Leader } from "./components/Leader";
 
 interface ExperienceCardProps {
   image?: string;
@@ -51,7 +52,8 @@ export function Projects() {
   return (
     <div>
       <div className="flex items-center justify-between w-full pb-5">
-        <h2 className="text-xl">Projects</h2>
+        <h2>Projects</h2>
+        <Leader/>
       </div>
       <div className="flex flex-col gap-2">
         <ExperienceCard
