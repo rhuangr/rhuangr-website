@@ -1,0 +1,51 @@
+/* PP Neue Montreal font-face declarations
+   Files are served from the Vite `public` folder, so use absolute paths starting with /fonts
+*/
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-book.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-italic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-thin.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-medium.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: italic;
+  font-weight: 600;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-semibolditalic.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/pp-neue-montreal-cufonfonts-webfont/ppneuemontreal-bold.woff') format('woff');
+  font-display: swap;
+}
