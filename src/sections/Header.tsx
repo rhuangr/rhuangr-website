@@ -41,38 +41,36 @@ function ContactLink({
 
 export function Header() {
   return (
-    <header>
-      <div className="flex items-center justify-between w-full">
-        <h1>
-          <GradientText
-            className="text-[30px] font-[650]"
-            animationSpeed={0}
-          >
-            rhuangr
-          </GradientText>
-        </h1>
-        <div className="flex text-[13px] space-x-2 text-foreground">
-          <ContactLink href="https://github.com/rhuangr" icon={ArrowUpRight}>
-            Github
-          </ContactLink>
-          <ContactLink
-            href="https://www.linkedin.com/in/richard-huang-123456789/"
-            icon={ArrowUpRight}
-          >
-            Linkedin
-          </ContactLink>
-          <ContactLink
-            onClick={() =>
-              navigator.clipboard.writeText("richardhuang197@gmail.com")
-            }
-            icon={Copy}
-          >
-            Mail
-          </ContactLink>
-        </div>
-      </div>
-      <div className="text-[11px] text-muted-foreground">
+    <header className="w-[120px]] flex-shrink-0">
+      <h1>
+        <GradientText
+          className="text-[30px] font-[650]"
+          animationSpeed={0}
+        >
+          rhuangr
+        </GradientText>
+      </h1>
+      <div className="text-[11px] text-muted-foreground mb-6">
         last updated: 2025-10-25
+      </div>
+      <div className="flex flex-col text-[13px] space-y-2 text-foreground">
+        <ContactLink href="https://github.com/rhuangr" icon={ArrowUpRight}>
+          Github
+        </ContactLink>
+        <ContactLink
+          href="https://www.linkedin.com/in/richard-huang-123456789/"
+          icon={ArrowUpRight}
+        >
+          Linkedin
+        </ContactLink>
+        <ContactLink
+          onClick={() =>
+            navigator.clipboard.writeText("richardhuang197@gmail.com")
+          }
+          icon={Copy}
+        >
+          Mail
+        </ContactLink>
       </div>
     </header>
   );

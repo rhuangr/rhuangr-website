@@ -1,18 +1,13 @@
-import { Leader } from "../components/Leader";
 import { GlowEffect } from "../components/GlowEffect";
 import { Textarea } from "@/components/ui/textarea";
 import { Brain } from "lucide-react";
 import { GradientText } from "../components/GradientText";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function About() {
   return (
-    <div>
-      <div className="flex items-center w-full mb-10">
-        <h2 className="text-2xl">About</h2>
-        <Leader />
-      </div>
-      <div className="text-foreground leading-relaxed space-y-5]">
+    <div className="flex-1">
+      <div className="text-foreground leading-relaxed mt-21">
         <p>
           Hello, I'm Richard Huang, a software engineer based in Montreal,
           Canada.

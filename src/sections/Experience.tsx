@@ -1,5 +1,4 @@
 import { Card } from "../components/ui/card";
-import { Leader } from "../components/Leader";
 
 interface ExperienceCardProps {
   image?: React.ReactNode;
@@ -46,12 +45,11 @@ function ExperienceCard({
 
 export function Experience() {
   return (
-    <div>
-      <div className="flex items-center justify-between w-full mb-10">
+    <div className="flex gap-8">
+      <div className="w-[120px] flex-shrink-0">
         <h2>Experience</h2>
-        <Leader />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex-1 flex flex-col gap-2">
         <ExperienceCard
           image={
             <img

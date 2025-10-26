@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { Leader } from "@/components/Leader";
 
 interface ExperienceCardProps {
   image?: string;
@@ -50,12 +49,11 @@ function ExperienceCard({
 
 export function Projects() {
   return (
-    <div>
-      <div className="flex items-center justify-between w-full pb-5">
+    <div className="flex gap-8">
+      <div className="w-[120px] flex-shrink-0">
         <h2>Projects</h2>
-        <Leader/>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex-1 flex flex-col gap-2">
         <ExperienceCard
           image="public/Assets/shoppy/svg/shopify_glyph_white.svg"
           heading="Shopify"
