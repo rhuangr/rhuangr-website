@@ -1,5 +1,5 @@
-import { Card } from "./components/ui/card";
-import { Leader } from "./components/Leader";
+import { Card } from "../components/ui/card";
+import { Leader } from "../components/Leader";
 
 interface ExperienceCardProps {
   image?: React.ReactNode;
@@ -32,9 +32,9 @@ function ExperienceCard({
         <div className="flex items-center">
           <div className="w-12">{image && image}</div>
           <div className="flex flex-col justify-center">
-            {heading && <h3 className="text-base">{heading}</h3>}
+            {heading && <h3 className="text-base font-[500]">{heading}</h3>}
             {subheading && (
-              <p className="text-muted-foreground">{subheading}</p>
+              <p className="text-muted-foreground text-sm">{subheading}</p>
             )}
           </div>
         </div>

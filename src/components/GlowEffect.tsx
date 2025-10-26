@@ -35,7 +35,7 @@ export function GlowEffect({
   blur = "medium",
   transition,
   scale = 1,
-  duration = 5,
+  duration = 2,
 }: GlowEffectProps) {
   const BASE_TRANSITION = {
     repeat: Infinity,
@@ -58,7 +58,7 @@ export function GlowEffect({
         (color) =>
           `radial-gradient(circle at 50% 50%, ${color} 0%, transparent 100%)`
       ),
-      scale: [1 * scale, 1.1 * scale, 1 * scale],
+      scale: [1 * scale, 1.2 * scale, 1 * scale],
       opacity: [0.5, 0.8, 0.5],
       transition: {
         ...(transition ?? {
@@ -144,7 +144,7 @@ return (
     animate={animations[mode]}
     className={cn(
       "pointer-events-none absolute inset-0 h-full w-full",
-      "scale-[var(--scale)] transform-gpu transition-transform duration-300 ease-in-out",  // Added transition for smooth scale changes
+      "scale-[var(--scale)] transform-gpu transition-transform duration-300 ease-in-out",
       getBlurClass(blur),
       className
     )}

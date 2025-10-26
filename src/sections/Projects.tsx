@@ -1,5 +1,5 @@
-import { Card } from "./components/ui/card";
-import { Leader } from "./components/Leader";
+import { Card } from "@/components/ui/card";
+import { Leader } from "@/components/Leader";
 
 interface ExperienceCardProps {
   image?: string;

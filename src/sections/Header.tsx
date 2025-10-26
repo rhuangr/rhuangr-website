@@ -1,5 +1,5 @@
 import { ArrowUpRight, Copy } from "lucide-react";
-import { GradientText } from "./components/GradientText";
+import { GradientText } from "../components/GradientText";
 
 interface ContactLinkProps {
   href?: string;
@@ -43,16 +43,15 @@ export function Header() {
   return (
     <header>
       <div className="flex items-center justify-between w-full">
-        <h1 className="font-[650]">
+        <h1>
           <GradientText
-            colors={["#ffd940ff", "#e57220ff", "#ffa340ff", "#ffdf40ff"]}
-            animationSpeed={8}
-            className="text-[27px] font-[650]"
+            className="text-[30px] font-[650]"
+            animationSpeed={0}
           >
             rhuangr
           </GradientText>
         </h1>
-        <div className="flex text-[12px] space-x-2 text-foreground">
+        <div className="flex text-[13px] space-x-2 text-foreground">
           <ContactLink href="https://github.com/rhuangr" icon={ArrowUpRight}>
             Github
           </ContactLink>

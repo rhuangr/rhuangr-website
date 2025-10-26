@@ -1,8 +1,8 @@
 import { ThemeProvider } from "./components/ui/theme-provider";
-import { Header } from "./Header";
-import { About } from "./About";
-import { Experience } from "./Experience";
-import { Projects } from "./Projects";
+import { Header } from "./sections/Header";
+import { About } from "./sections/About";
+import { Experience } from "./sections/Experience";
+import { Projects } from "./sections/Projects";
 
 function App() {
   return (
