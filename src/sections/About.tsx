@@ -1,120 +1,67 @@
-import { Leader } from "../components/Leader";
-import { GlowEffect } from "../components/GlowEffect";
-import { Textarea } from "@/components/ui/textarea";
-import { Brain } from "lucide-react";
-import { GradientText } from "../components/GradientText";
-import { useEffect, useState } from "react";
+import { RHUANGGPT } from "./RHUANGGPT";
+import { ContentBlock } from "./ContentBlock";
+import { GithubLink, LinkedinLink, MailLink, ResumeLink } from "./Links";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function About() {
   return (
     <div>
-      <div className="flex items-center w-full mb-10">
-        <h2 className="text-2xl">About</h2>
-        <Leader />
+      <h2>About Me</h2>
+      <AboutContent isLoading={true} />
+    </div>
+  );
+}
+
+interface AboutContentProps {
+  isLoading?: boolean;
+}
+function AboutContent({ isLoading=false }: AboutContentProps) {
+
+  const content = isLoading
+    ? ["w-full", "w-4/5", "w-3/4", "w-2/5", "w-full"].map((width, i) => (
+        <Skeleton key={i} className={`${width} h-4 my-2`} />
+      ))
+    : (
+      <div>
+        <p>Hi, I'm Richard, a software engineer based in Montreal, Canada.</p>
+      <ul className="list-(--my-marker) list-inside py-2">
+        <li>
+          I'm a second year at McGill University{" "}
+          <span className="ml-1.5">🎓 </span>
+        </li>
+        <li>
+          I'm <span className="italic">addicted</span> to video games{" "}
+          <span className="ml-1.5">🎮 </span>
+        </li>
+        <li>
+          And I like singing and playing the piano{" "}
+          <span className="ml-1.5">🎹 </span>
+        </li>
+      </ul>
+      <p>
+        Want to know more about me? Chat with rhuang GPT
+        {/* <GradientText className="font-[600]">rhuang GPT</GradientText> */}
+      </p>
+      <div className="">
+       </div> 
       </div>
-      <div className="text-foreground leading-relaxed space-y-5]">
-        <p>
-          Hello, I'm Richard Huang, a software engineer based in Montreal,
-          Canada.
-        </p>
-        <ul className="mt-4 list-(--my-marker) list-inside custom-list pb-5">
-          <li>
-            I'm a second year at McGill University <span className="text-base">🎓</span>
-          </li>
-          <li>
-            I'm <span className="italic">addicted</span> to video games{" "}
-            <span className="text-base ml-1.5">🎮</span>
-          </li>
-          <li>
-            And I like singing and playing the piano <span className="text-base">🎹</span>
-          </li>
-        </ul>
-        <p>
-          Want to know more about me? Chat with{" "}
-          <GradientText className="font-[600]">rhuang GPT</GradientText>
-        </p>
-        <div className="">
-          <RHUANGGPT duration={700} />
+    );
+
+  return (
+    <ContentBlock
+      sideHeader={
+        <div className="flex flex-col font-family-inter font-size-body">
+          <GithubLink href="https://github.com/rhuangr" />
+          <LinkedinLink href="https://www.linkedin.com/in/richard-huang-123456789/" />
+          <MailLink email="richardhuang197@gmail.com" />
+          <ResumeLink href="Assets/RichardHuang-Resume.pdf" />
         </div>
-      </div>
-    </div>
+      }
+      className="text-foreground leading-[1.6rem]"
+    >
+      {content}
+
+        <RHUANGGPT duration={800} />
+    </ContentBlock>
   );
 }
-
-interface RHUANGGPTProps {
-  duration?: number;
-}
-
-const RHUANGGPT = ({ duration = 700 }: RHUANGGPTProps) => {
-  const [on, setOn] = useState(false);
-
-  return (
-    <div className="relative h-24 mt-12">
-      <div
-        className={`absolute top-1/2 transform -translate-y-1/2 left-0 w-65/100 transition-all ease-in-out duration-${duration} ${
-          on ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-[50%]"
-        }`}
-      >
-        <Textarea
-          placeholder="Ask me a question"
-          className="py-3 px-4 min-h-25 max-h-25"
-        />
-      </div>
-      <div
-        className={`absolute top-1/2 ${
-          on ? "left-74/100" : "left-1/2"
-        } transform -translate-x-1/2 -translate-y-1/2 ease-in-out transition-all duration-${duration}`}
-      >
-        <BigBrainButton onClick={() => setOn(!on)} />
-      </div>
-    </div>
-  );
-};
-
-const BigBrainButton = ({ onClick }: { onClick?: () => void }) => {
-  return (
-    <div className="relative group h-12 w-12">
-      <GlowEffect
-        mode="static"
-        scale={1}
-        className="opacity-100 group-hover:opacity-0 transition-opacity duration-500 rounded-full"
-      />
-
-      {/* Hover glow */}
-      <GlowEffect
-        mode="rotate"
-        blur="soft"
-        colors={["#ff40a0ff", "#e57220ff", "#ffd640ff", "#ff5040ff"]}
-        scale={1.4}
-        className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"
-      />
-
-      <button
-        type="button"
-        onClick={onClick}
-        className="relative h-12 w-12 flex justify-center items-center bg-card/90 text-foreground rounded-lg transition cursor-pointer group"
-      >
-        <Brain
-          size={24}
-          strokeWidth={1.4}
-          className="text-foreground transform transition-transform duration-400 ease-out group-hover:scale-103"
-        />
-      </button>
-    </div>
-  );
-};
-
-import { useId } from "react";
-
-const TextareaWithOverlappingLabel = () => {
-  const id = useId();
-
-  return (
-    <div className="relative max-w-xs space-y-2">
-      <div className=" text-foreground absolute top-0 left-2 z-10 block -translate-y-1/2 px-1 text-[14px] font-lg group-has-disabled:opacity-50">
-        Talk to me 🤖
-      </div>
-      <Textarea id={id} className="bg-card min-h-25 max-h-25 pt-4" />
-    </div>
-  );
-};
