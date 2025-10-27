@@ -1,77 +1,31 @@
-import { ArrowUpRight, Copy } from "lucide-react";
 import { GradientText } from "../components/GradientText";
-
-interface ContactLinkProps {
-  href?: string;
-  onClick?: () => void;
-  icon: React.ComponentType<any>;
-  children: React.ReactNode;
-}
-
-function ContactLink({
-  href,
-  onClick,
-  icon: Icon,
-  children,
-}: ContactLinkProps) {
-  const commonClasses =
-    "relative items-center inline-flex transition-all duration-300 ease-in-out hover:after:content-[''] hover:after:absolute hover:after:bottom-[-1px] hover:after:left-0 hover:after:right-0 hover:after:h-[1px] hover:after:bg-muted-foreground";
-
-  if (href) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={commonClasses}
-      >
-        {children}
-        <Icon className="inline-block w-4 h-4 text-muted-foreground" />
-      </a>
-    );
-  }
-
-  return (
-    <button type="button" onClick={onClick} className={commonClasses}>
-      {children}
-      <Icon className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
-    </button>
-  );
-}
 
 export function Header() {
   return (
-    <header className="w-[120px]] flex-shrink-0">
-      <h1>
-        <GradientText
-          className="text-[30px] font-[650]"
-          animationSpeed={0}
-        >
-          rhuangr
-        </GradientText>
-      </h1>
-      <div className="text-[11px] text-muted-foreground mb-6">
-        last updated: 2025-10-25
-      </div>
-      <div className="flex flex-col text-[13px] space-y-2 text-foreground">
-        <ContactLink href="https://github.com/rhuangr" icon={ArrowUpRight}>
-          Github
-        </ContactLink>
-        <ContactLink
-          href="https://www.linkedin.com/in/richard-huang-123456789/"
-          icon={ArrowUpRight}
-        >
-          Linkedin
-        </ContactLink>
-        <ContactLink
-          onClick={() =>
-            navigator.clipboard.writeText("richardhuang197@gmail.com")
-          }
-          icon={Copy}
-        >
-          Mail
-        </ContactLink>
-      </div>
-    </header>
+    <div className="flex justify-start items-center mb-3">
+      <div className="text-left">
+        <h1>
+          <GradientText className="text-[25px] font-[650]" animationSpeed={0}>
+            rhuangr
+          </GradientText>
+        </h1>
+        <div className="text-muted-foreground text-subheading">
+          Last updated :
+          <span className="font-family-chivo-mono"> 2025-10-25</span>
+        </div>
+      </div>{" "}
+      
+        {/* <h1>
+          <GradientText className="text-[40px] font-[650]" animationSpeed={0}>
+            rhuangr
+          </GradientText>
+        </h1>
+        <div className="text-muted-foreground text-subheading">
+          Last updated :
+          <span className="font-family-chivo-mono"> 2025-10-25</span>
+        </div> */}
+   
+      {/* <img src="Assets/headshot.jpg" alt="Logo" className="ml-5 h-25 w-26 rounded-lg" /> */}
+    </div>
   );
 }

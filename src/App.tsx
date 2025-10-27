@@ -7,11 +7,9 @@ import { Projects } from "./sections/Projects";
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="mx-auto w-[750px] min-h-screen px-18 py-8 box-shadow space-y-12 overflow-hidden bg-background text-foreground">
-        <div className="flex gap-8">
-          <Header />
-          <About />
-        </div>
+      <div className="mx-auto w-[750px] min-h-screen px-18 py-8 box-shadow space-y-1 overflow-hidden bg-background text-foreground">
+        <Header />
+        <About />
         <Experience />
         <Projects />
       </div>

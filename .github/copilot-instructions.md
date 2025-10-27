@@ -2,6 +2,7 @@
 
 - NEVER add comments UNLESS specifically instructed to do so.
 - Please explain your change and why it solves the questions asked.
+- Avoid adding many indentations such as margins or paddings in different places. This makes it hard to keep track of spacing.
 
 ### Styling Instructions
 
