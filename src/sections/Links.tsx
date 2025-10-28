@@ -14,8 +14,9 @@ export function GithubLink({ href }: { href: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative inline-flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
+      className="relative "
     >
+      <div className="group inline-flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200">
       <img
         src="/Assets/github-mark/github-mark-white.svg"
         alt="GitHub"
@@ -24,6 +25,7 @@ export function GithubLink({ href }: { href: string }) {
       <div className="inline-flex items-center ">
         <span className="px-1">Github</span>
         <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-[10%] group-hover:-translate-y-[20%] group-hover:scale-120" />
+      </div>
       </div>
     </a>
   );
@@ -63,7 +65,7 @@ export function MailLink({ email }: { email: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="group transition-all duration-300 relative  inline-flex items-center  text-muted-foreground hover:text-foreground transition-colors duration-200"
+      className="group transition-all duration-300 relative  inline-flex items-center  text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer"
     >
       <Mail className="w-[13px] h-[13px]" />
       <span className="px-1">Mail</span>

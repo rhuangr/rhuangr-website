@@ -98,9 +98,9 @@ const BigBrainButton = ({ onClick, disabled = false }: BigBrainButtonProps) => {
       <GlowEffect
         mode="rotate"
         duration={6}
-        scale={1}
+        scale={0.9}
         className={`opacity-100
-        } transition-opacity duration-500 rounded-full`}
+        } transition-opacity duration-500 animate-pulse-scale-mini rounded-full`}
       />
 
       {/* Hover glow */}

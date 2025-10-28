@@ -39,7 +39,7 @@ export function MyAccordion() {
   const loadingKeyRef = useRef<string | null>(null);
 
   const accordionTriggerStyles =
-    "w-full py-1 text-body font-[400] text-left dark:text-muted-foreground border-b-2";
+    "w-full py-1 text-body font-[400] text-left dark:text-muted-foreground border-b-1";
   const accordionContentStyles =
     "font-[400] text-zinc-500 dark:text-foreground leading-[1.4rem]";
 
@@ -79,7 +79,7 @@ export function MyAccordion() {
           if (totalSize === 1 && value === null) return;
           setOpenedKey(value);
         }}
-        className="flex w-full flex-col"
+        className="flex w-full flex-col space-y-1"
       >
         {allItems.map((item, i) => {
           const isNewItem = i >= initialAccordionItemsData.length;
