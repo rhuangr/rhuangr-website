@@ -1,6 +1,7 @@
 import { Card } from "../components/ui/card";
 import { ContentBlock } from "./ContentBlock";
 import { CircleQuestionMark } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ExperienceCardProps {
   image?: React.ReactNode;
@@ -47,7 +48,7 @@ function ExperienceCard({
 
 export function Projects() {
   return (
-    <div>
+    <motion.div layout>
       <h2>Projects</h2>
       <div className="flex">
         <div className="flex-1 flex flex-col">
@@ -75,6 +76,6 @@ export function Projects() {
           </ContentBlock>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

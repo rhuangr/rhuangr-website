@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { GlowEffect } from "../components/GlowEffect";
-import {
-  InputGroup,
-  InputGroupTextarea,
-  InputGroupAddon,
-  InputGroupButton,
-} from "@/components/ui/input-group";
+import { GlowEffect } from "../../components/GlowEffect";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { Brain, ArrowUp } from "lucide-react";
+import { useAboutContext } from "./AboutContext";
 
 interface RHUANGGPTProps {
   duration?: number;
@@ -14,13 +11,15 @@ interface RHUANGGPTProps {
 
 export const RHUANGGPT = ({ duration = 370 }: RHUANGGPTProps) => {
   const [on, setOn] = useState(false);
-  const { isLoading, error, submitPrompt } = useOpenAI();
+  const { submitPrompt } = useAboutContext();
 
   return (
-    <div className="relative h-24 mt-7">
+    <div className="relative h-24">
       <div
         className={`absolute top-1/2 transform -translate-y-1/2 left-0 w-80/100 transition-all ease-in-out ${
-          on ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-[61%]"
+          on
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 -translate-x-[61%] pointer-events-none"
         }`}
         style={{ transitionDuration: `${duration}ms` }}
       >
@@ -32,30 +31,10 @@ export const RHUANGGPT = ({ duration = 370 }: RHUANGGPTProps) => {
         } transform -translate-x-1/2 -translate-y-1/2 ease-in-out transition-all`}
         style={{ transitionDuration: `${duration}ms` }}
       >
-        <BigBrainButton thinking={isLoading} onClick={() => setOn(!on)} />
+        <BigBrainButton onClick={() => setOn(!on)} />
       </div>
     </div>
   );
-};
-
-const useOpenAI = () => {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const submitPrompt = async (prompt: string) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 4000));
-    } catch (err) {
-      setError("Failed to submit prompt");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { isLoading, error, submitPrompt };
 };
 
 interface AITextAreaProps {
@@ -64,6 +43,7 @@ interface AITextAreaProps {
 
 const AITextArea = ({ onSubmit }: AITextAreaProps) => {
   const [prompt, setPrompt] = useState("");
+  const { isLoading } = useAboutContext();
 
   const submitHandler = () => {
     console.log("Submitted prompt:", prompt);
@@ -81,30 +61,26 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
   };
 
   return (
-    <div className="relative">
-      <InputGroup className="!h-15">
-        <InputGroupTextarea
-          value={prompt}
-          onChange={(e) => {
-            setPrompt(e.target.value);
-          }}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask me a question..."
-          className="field-sizing-fixed overflow-hidden placeholder:text-body!"
-        />
-        <InputGroupAddon align="inline-end">
-          <InputGroupButton
-            variant="outline"
-            className="rounded-full ml-auto"
-            size="icon-sm"
-            disabled={prompt.trim() === ""}
-            onClick={submitHandler}
-          >
-            <ArrowUp />
-            <span className="sr-only">Send</span>
-          </InputGroupButton>
-        </InputGroupAddon>
-      </InputGroup>
+    <div className="relative ">
+      <Textarea
+        value={prompt}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          setPrompt(e.target.value);
+        }}
+        onKeyDown={handleKeyDown}
+        placeholder="Ask me a question..."
+        className="h-20 pr-14 border-0"
+      />
+      <Button
+        variant="outline"
+        size="icon-sm"
+        className="absolute bottom-0 right-0 rounded-full -translate-x-1/3 -translate-y-1/2"
+        disabled={prompt.trim() === "" || isLoading}
+        onClick={submitHandler}
+      >
+        <ArrowUp />
+        <span className="sr-only">Send</span>
+      </Button>
     </div>
   );
 };
@@ -112,14 +88,11 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
 interface BigBrainButtonProps {
   onClick?: () => void;
   disabled?: boolean;
-  thinking?: boolean;
 }
 
-const BigBrainButton = ({
-  onClick,
-  disabled = false,
-  thinking = false,
-}: BigBrainButtonProps) => {
+const BigBrainButton = ({ onClick, disabled = false }: BigBrainButtonProps) => {
+  const { isLoading: thinking } = useAboutContext();
+
   return (
     <div className="relative group h-12 w-12">
       <GlowEffect
@@ -136,7 +109,9 @@ const BigBrainButton = ({
         blur="soft"
         colors={["#ff40a0ff", "#e57220ff", "#ffd640ff", "#ff5040ff"]}
         scale={1.4}
-        className={`opacity-0 ${thinking ? "opacity-100 animate-pulse-scale" : ""} group-hover:opacity-100 transition-opacity duration-500 rounded-full`}
+        className={`opacity-0 ${
+          thinking ? "opacity-100 animate-pulse-scale" : ""
+        } group-hover:opacity-100 transition-opacity duration-500 rounded-full`}
       />
 
       <button

@@ -1,6 +1,7 @@
 import { Card } from "../components/ui/card";
 import { ContentBlock } from "./ContentBlock";
 import { CircleQuestionMark } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ExperienceCardProps {
   image?: React.ReactNode;
@@ -35,7 +36,7 @@ function ExperienceCard({
           <div className="flex flex-col justify-center">
             {heading && <h4 className="font-[500]">{heading}</h4>}
             {subheading && (
-              <p className="text-muted-foreground">{subheading}</p>
+              <p className="text-muted-foreground text-subheading">{subheading}</p>
             )}
           </div>
         </div>
@@ -61,7 +62,7 @@ export function Experience() {
                 />
               }
               heading="Shopify"
-              subheading="Software Engineer Intern"
+              subheading="Engineering Intern - Customer Accounts and Login"
             />
           </ContentBlock>
           <ContentBlock sideHeader="MM/YYYY - MM/YYYY">
