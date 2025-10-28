@@ -21,7 +21,7 @@
   --muted-amber: oklch(46.268% 0.0672 97.554);
   --amber-glow: oklch(0.82 0.17 80 / 0.15);
   --radius: 1.2rem;
-  --font-size-heading: 15px;
+  --font-size-heading: 14px;
   --font-size-subheading: 12px;
   --font-size-body: 13px;
   --background: oklch(1 0 0);
@@ -70,8 +70,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-size: var(--font-size-body);
-  font-weight: 420;
-  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-family: system-ui, "Uncut Sans", 'Inter', sans-serif;
   color: var(--foreground);
   line-height: 1.4rem;
 }
@@ -95,8 +95,19 @@ h3 {
 }
 
 li {
-   padding-left: 1.2rem;
-   text-indent: -1.1rem;
+  padding-left: 1.2rem;
+  text-indent: -1.1rem;
+}
+
+.list-decimal-custom {
+  list-style-type: decimal;
+  padding-left: 1rem;
+}
+
+.list-decimal-custom li::marker {
+  color: var(--muted-foreground);
+  font-family: var(--font-family-geist-mono);
+  font-weight: 500;
 }
 
 @theme inline {
@@ -163,7 +174,7 @@ li {
   --secondary-foreground: oklch(92.246% 0.01781 89.35);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(70.062% 0.00269 47.562);
-  --accent: oklch(0.269 0 0);
+  --accent: oklch(23.929% 0.00003 271.152);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(100% 0.00011 271.152 / 0.055);
@@ -200,9 +211,12 @@ li {
   }
 
   @keyframes pulse-scale {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: scale(0.9);
     }
+
     50% {
       transform: scale(1.15);
     }
