@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import type { ReactNode } from "react";
+import type { Key, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Accordion,
@@ -9,128 +9,158 @@ import {
 } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TextShimmer } from "@/components/TextShimmer";
-
 import { ChevronUp } from "lucide-react";
-import { useAboutContext } from "./AboutContext";
+import { useRhuangrContext } from "./rhuangrContext";
+import { cn } from "@/lib/utils";
+import { Experience } from "../Experience";
+import { Projects } from "../Projects";
 
-type AccordionItem = {
+type AccordionItemData = {
   value: string;
   title: ReactNode;
   content: ReactNode;
+  contentKey: string;
+  contentClassName?: string;
 };
 
-function skeletonAccordionItem({ value }: { value: string }): AccordionItem {
-  return {
-    value,
-    title: <TextShimmer duration={1.5}>Loading...</TextShimmer>,
-    content: (
-      <div className="space-y-[0.4rem]">
-        <Skeleton className="h-[1em] w-3/4 bg-accent/60" />
-        <Skeleton className="h-[1em] w-full bg-accent/30" />
-      </div>
-    ),
-  };
-}
-
-export function MyAccordion() {
-  const { isLoading, output } = useAboutContext();
-  const [newItems, setNewItems] = useState<AccordionItem[]>([]);
-  const [openedKey, setOpenedKey] = useState<React.Key | null>("about-me");
-  const loadingKeyRef = useRef<string | null>(null);
-
-  const accordionTriggerStyles =
-    "w-full py-1 text-body font-[400] text-left dark:text-muted-foreground border-b-1";
-  const accordionContentStyles =
-    "font-[400] text-zinc-500 dark:text-foreground leading-[1.4rem]";
-
-  useEffect(() => {
-    if (isLoading && !loadingKeyRef.current) {
-      // Only add a new loading item if we're not already loading
-      const newKey = `loading-${Date.now()}`; // Use timestamp for unique keys
-      loadingKeyRef.current = newKey;
-      setNewItems((prevItems) => [
-        ...prevItems,
-        skeletonAccordionItem({ value: newKey }),
-      ]);
-    } else if (!isLoading && output && loadingKeyRef.current) {
-      // Update the loading item with the actual content
-      const keyToUpdate = loadingKeyRef.current;
-      setOpenedKey(keyToUpdate);
-      setNewItems((prevItems) =>
-        prevItems.map((item) =>
-          item.value === keyToUpdate
-            ? { ...item, title: "AI Response", content: <div>{output}</div> }
-            : item
-        )
-      );
-      loadingKeyRef.current = null; // Reset for next submission
-    }
-  }, [isLoading, output]);
-
-  // Combine all items
-  const allItems = [...initialAccordionItemsData, ...newItems];
-  const totalSize = allItems.length;
-
+function skeletonContent() {
   return (
-    <motion.div layout>
-      <Accordion
-        expandedValue={openedKey}
-        onValueChange={(value) => {
-          if (totalSize === 1 && value === null) return;
-          setOpenedKey(value);
-        }}
-        className="flex w-full flex-col space-y-1"
-      >
-        {allItems.map((item, i) => {
-          const isNewItem = i >= initialAccordionItemsData.length;
-          
-          const content = (
-            <AccordionItem value={item.value}>
-              <AccordionTrigger className={accordionTriggerStyles}>
-                <div className="flex items-center justify-between overflow-hidden">
-{
-                    item.title
-                  }
-                  {totalSize > 1 && (
-                    <ChevronUp className="h-3 w-3 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50" />
-                  )}
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className={accordionContentStyles}>
-                  <span className="block h-3" />
-                  {item.content}
-                  <span className="block h-2" />
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          );
-
-          // Only wrap new items with animation
-          return isNewItem ? (
-            <motion.div
-              key={item.value}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              layout
-            >
-              {content}
-            </motion.div>
-          ) : (
-            <div key={item.value}>{content}</div>
-          );
-        })}
-      </Accordion>
-    </motion.div>
+    <div className="space-y-[0.4rem]">
+      <Skeleton className="h-[1em] w-3/4 bg-accent/60" />
+      <Skeleton className="h-[1em] w-full bg-accent/30" />
+    </div>
   );
 }
 
-const initialAccordionItemsData = [
+// Animated wrapper component for content transitions
+function AnimatedContent({ contentKey, children }: { contentKey: string; children: ReactNode }) {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={contentKey}
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 8 }}
+        transition={{ duration: 0.25, ease: "easeInOut" }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export function MyAccordion() {
+  const { isLoading, output } = useRhuangrContext();
+  const [newItems, setNewItems] = useState<AccordionItemData[]>([]);
+  const [openedKeys, setOpenedKeys] = useState<Key[]>(["experience", "projects"]);
+  const loadingKeyRef = useRef<string | null>(null);
+
+  const accordionTriggerStyles =
+    "w-full py-1 text-body font-[400] text-left dark:foreground border-b-1";
+  const accordionContentStyles =
+    "font-[400] text-zinc-500 text-subheading dark:text-muted-foreground ml-50";
+
+  useEffect(() => {
+    if (isLoading && !loadingKeyRef.current) {
+      const newKey = `response-${Date.now()}`;
+      loadingKeyRef.current = newKey;
+      setNewItems((prevItems) => [
+        ...prevItems,
+        {
+          value: newKey,
+          title: <TextShimmer duration={1.5}>Loading...</TextShimmer>,
+          content: skeletonContent(),
+          contentKey: "loading",
+          contentClassName: "",
+        },
+      ]);
+      setOpenedKeys((prev) => Array.from(new Set([...prev, newKey])));
+    } else if (!isLoading && output && loadingKeyRef.current) {
+      const loadingKey = loadingKeyRef.current;
+      setNewItems((prevItems) =>
+        prevItems.map((item) =>
+          item.value === loadingKey
+            ? {
+                ...item,
+                title: "AI Response",
+                content: <div>{output}</div>,
+                contentKey: "loaded",
+              }
+            : item
+        )
+      );
+      loadingKeyRef.current = null;
+    }
+  }, [isLoading, output]);
+
+  const allItems = [...BASE_ACCORDION_ITEMS, ...newItems];
+  const totalSize = allItems.length;
+  const baseLength = BASE_ACCORDION_ITEMS.length;
+
+  return (
+    <Accordion
+      type="multiple"
+      expandedValue={openedKeys}
+      onValueChange={(value) => {
+        const next = Array.isArray(value)
+          ? value
+          : value !== null && value !== undefined
+            ? [value]
+            : [];
+
+        if (totalSize === 1 && next.length === 0) return;
+        setOpenedKeys(next);
+      }}
+      className="flex w-full flex-col space-y-5"
+    >
+      {allItems.map((item, i) => {
+        const isNewItem = i >= baseLength;
+
+        const content = (
+          <AccordionItem value={item.value}>
+            <AccordionTrigger className={accordionTriggerStyles}>
+              <div className="flex items-center justify-between overflow-hidden">
+                {item.title}
+                {totalSize > 1 && (
+                  <ChevronUp className="h-3 w-3 text-zinc-950 transition-transform duration-200 group-data-expanded:-rotate-180 dark:text-zinc-50" />
+                )}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className={cn(accordionContentStyles, item.contentClassName)}>
+                <span className="block h-3" />
+                <AnimatedContent contentKey={item.contentKey || item.value}>
+                  {item.content}
+                </AnimatedContent>
+                <span className="block h-2" />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        );
+
+        return isNewItem ? (
+          <motion.div
+            key={item.value}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {content}
+          </motion.div>
+        ) : (
+          <div key={item.value}>{content}</div>
+        );
+      })}
+    </Accordion>
+  );
+}
+
+const BASE_ACCORDION_ITEMS: AccordionItemData[] = [
   {
     title: "About Me",
     value: "about-me",
+    contentKey: "about-me",
     content: (
       <>
         Some quick facts:
@@ -148,6 +178,7 @@ const initialAccordionItemsData = [
   {
     title: "Coding Languages",
     value: "coding-languages",
+    contentKey: "coding-languages",
     content: (
       <>
         My coding languages in order of proficiency:
@@ -159,5 +190,19 @@ const initialAccordionItemsData = [
         </ol>
       </>
     ),
+  },
+  {
+    title: "Experience",
+    value: "experience",
+    contentKey: "experience",
+    contentClassName: "pl-0",
+    content: <Experience />,
+  },
+  {
+    title: "Projects",
+    value: "projects",
+    contentKey: "projects",
+    contentClassName: "pl-0",
+    content: <Projects/>,
   },
 ];

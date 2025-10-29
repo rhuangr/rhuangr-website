@@ -3,10 +3,15 @@ import { motion, AnimatePresence, MotionConfig } from "motion/react";
 import type { Transition, Variants, Variant } from "motion/react";
 import { cn } from "@/lib/utils";
 import React, { createContext, useContext, useState } from "react";
-import type { ReactNode } from "react";
+import type { Key, ReactNode } from "react";
+
+type AccordionSelection = Key | Key[] | null;
+
 export type AccordionContextType = {
-  expandedValue: React.Key | null;
-  toggleItem: (value: React.Key) => void;
+  expandedValue: AccordionSelection;
+  toggleItem: (value: Key) => void;
+  isExpanded: (value: Key) => boolean;
+  type: "single" | "multiple";
   variants?: { expanded: Variant; collapsed: Variant };
 };
 
@@ -25,26 +30,64 @@ function useAccordion() {
 export type AccordionProviderProps = {
   children: ReactNode;
   variants?: { expanded: Variant; collapsed: Variant };
-  expandedValue?: React.Key | null;
-  onValueChange?: (value: React.Key | null) => void;
+  expandedValue?: AccordionSelection;
+  defaultExpandedValue?: AccordionSelection;
+  type?: "single" | "multiple";
+  onValueChange?: (value: AccordionSelection) => void;
 };
 
 function AccordionProvider({
   children,
   variants,
   expandedValue: externalExpandedValue,
+  defaultExpandedValue,
+  type = "single",
   onValueChange,
 }: AccordionProviderProps) {
+  const initialValue =
+    defaultExpandedValue !== undefined
+      ? defaultExpandedValue
+      : type === "multiple"
+        ? []
+        : null;
+
   const [internalExpandedValue, setInternalExpandedValue] =
-    useState<React.Key | null>(null);
+    useState<AccordionSelection>(initialValue);
 
   const expandedValue =
     externalExpandedValue !== undefined
       ? externalExpandedValue
       : internalExpandedValue;
 
-  const toggleItem = (value: React.Key) => {
-    const newValue = expandedValue === value ? null : value;
+  const normalizeToArray = (value: AccordionSelection): Key[] => {
+    if (Array.isArray(value)) {
+      return value;
+    }
+    if (value === null || value === undefined) {
+      return [];
+    }
+    return [value];
+  };
+
+  const isExpanded = (value: Key) => {
+    if (type === "multiple") {
+      return normalizeToArray(expandedValue).includes(value);
+    }
+    return expandedValue === value;
+  };
+
+  const toggleItem = (value: Key) => {
+    let newValue: AccordionSelection;
+
+    if (type === "multiple") {
+      const current = normalizeToArray(expandedValue);
+      newValue = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+    } else {
+      newValue = expandedValue === value ? null : value;
+    }
+
     if (onValueChange) {
       onValueChange(newValue);
     } else {
@@ -53,7 +96,9 @@ function AccordionProvider({
   };
 
   return (
-    <AccordionContext.Provider value={{ expandedValue, toggleItem, variants }}>
+    <AccordionContext.Provider
+      value={{ expandedValue, toggleItem, variants, isExpanded, type }}
+    >
       {children}
     </AccordionContext.Provider>
   );
@@ -64,8 +109,10 @@ export type AccordionProps = {
   className?: string;
   transition?: Transition;
   variants?: { expanded: Variant; collapsed: Variant };
-  expandedValue?: React.Key | null;
-  onValueChange?: (value: React.Key | null) => void;
+  expandedValue?: AccordionSelection;
+  defaultExpandedValue?: AccordionSelection;
+  type?: "single" | "multiple";
+  onValueChange?: (value: AccordionSelection) => void;
 };
 
 function Accordion({
@@ -74,6 +121,8 @@ function Accordion({
   transition,
   variants,
   expandedValue,
+  defaultExpandedValue,
+  type = "single",
   onValueChange,
 }: AccordionProps) {
   return (
@@ -82,6 +131,8 @@ function Accordion({
         <AccordionProvider
           variants={variants}
           expandedValue={expandedValue}
+          defaultExpandedValue={defaultExpandedValue}
+          type={type}
           onValueChange={onValueChange}
         >
           {children}
@@ -98,20 +149,19 @@ export type AccordionItemProps = {
 };
 
 function AccordionItem({ value, children, className }: AccordionItemProps) {
-  const { expandedValue } = useAccordion();
-  const isExpanded = value === expandedValue;
+  const { isExpanded } = useAccordion();
+  const expanded = value !== undefined ? isExpanded(value) : false;
 
   return (
     <div
       className={cn("overflow-hidden", className)}
-      {...(isExpanded ? { "data-expanded": "" } : { "data-closed": "" })}
+      {...(expanded ? { "data-expanded": "" } : { "data-closed": "" })}
     >
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            ...child.props,
+          return React.cloneElement(child as React.ReactElement<any>, {
             value,
-            expanded: isExpanded,
+            expanded,
           });
         }
         return child;
@@ -130,17 +180,17 @@ function AccordionTrigger({
   className,
   ...props
 }: AccordionTriggerProps) {
-  const { toggleItem, expandedValue } = useAccordion();
+  const { toggleItem, isExpanded } = useAccordion();
   const value = (props as { value?: React.Key }).value;
-  const isExpanded = value === expandedValue;
+  const expanded = value !== undefined ? isExpanded(value) : false;
 
   return (
     <button
       onClick={() => value !== undefined && toggleItem(value)}
-      aria-expanded={isExpanded}
+      aria-expanded={expanded}
       type="button"
       className={cn("group", className)}
-      {...(isExpanded ? { "data-expanded": "" } : { "data-closed": "" })}
+      {...(expanded ? { "data-expanded": "" } : { "data-closed": "" })}
     >
       {children}
     </button>
@@ -157,9 +207,9 @@ function AccordionContent({
   className,
   ...props
 }: AccordionContentProps) {
-  const { expandedValue, variants } = useAccordion();
+  const { variants, isExpanded } = useAccordion();
   const value = (props as { value?: React.Key }).value;
-  const isExpanded = value === expandedValue;
+  const expanded = value !== undefined ? isExpanded(value) : false;
 
   const BASE_VARIANTS: Variants = {
     expanded: { height: "auto", opacity: 1 },
@@ -172,8 +222,8 @@ function AccordionContent({
   };
 
   return (
-    <AnimatePresence initial={false}>
-      {isExpanded && (
+    <AnimatePresence initial={false} mode="wait">
+      {expanded && (
         <motion.div
           initial="collapsed"
           animate="expanded"
