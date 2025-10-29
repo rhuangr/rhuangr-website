@@ -13,7 +13,7 @@ export function ContentBlock({
 }: ContentBlockProps) {
   return (
     <div className={`flex w-full flex-col gap-y-3 py-2 ${className}`}>
-      <div className="flex-shrink-0 text-heading ">{header}</div>
+      <div className="flex-shrink-0 text-heading font-[700]">{header}</div>
       <div className="w-full pl-5">{children}</div>
     </div>
   );

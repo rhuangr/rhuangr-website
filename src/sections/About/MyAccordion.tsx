@@ -52,13 +52,13 @@ function AnimatedContent({ contentKey, children }: { contentKey: string; childre
 export function MyAccordion() {
   const { isLoading, output } = useRhuangrContext();
   const [newItems, setNewItems] = useState<AccordionItemData[]>([]);
-  const [openedKeys, setOpenedKeys] = useState<Key[]>(["experience", "projects"]);
+  const [openedKeys, setOpenedKeys] = useState<Key[]>(["projects"]);
   const loadingKeyRef = useRef<string | null>(null);
 
   const accordionTriggerStyles =
-    "w-full py-1 text-body font-[400] text-left dark:foreground border-b-1";
+    "w-full py-1 text-body text-left text-subheading dark:text-muted-foreground border-b-1";
   const accordionContentStyles =
-    "font-[400] text-zinc-500 text-subheading dark:text-muted-foreground ml-50";
+    " text-zinc-500 text-subheading dark:text-foreground";
 
   useEffect(() => {
     if (isLoading && !loadingKeyRef.current) {
@@ -111,7 +111,7 @@ export function MyAccordion() {
         if (totalSize === 1 && next.length === 0) return;
         setOpenedKeys(next);
       }}
-      className="flex w-full flex-col space-y-5"
+      className="flex w-full flex-col space-y-1"
     >
       {allItems.map((item, i) => {
         const isNewItem = i >= baseLength;
@@ -175,22 +175,22 @@ const BASE_ACCORDION_ITEMS: AccordionItemData[] = [
       </>
     ),
   },
-  {
-    title: "Coding Languages",
-    value: "coding-languages",
-    contentKey: "coding-languages",
-    content: (
-      <>
-        My coding languages in order of proficiency:
-        <ol className="list-decimal-custom list-inside pl-4 text-subheading font-family-chivo-mono font-[400]">
-          <li>Python</li>
-          <li>Javascript/Typescript</li>
-          <li>C</li>
-          <li>Java</li>
-        </ol>
-      </>
-    ),
-  },
+  // {
+  //   title: "Coding Languages",
+  //   value: "coding-languages",
+  //   contentKey: "coding-languages",
+  //   content: (
+  //     <>
+  //       My coding languages in order of proficiency:
+  //       <ol className="list-decimal-custom list-inside pl-4 text-subheading font-family-chivo-mono font-[400]">
+  //         <li>Python</li>
+  //         <li>Javascript/Typescript</li>
+  //         <li>C</li>
+  //         <li>Java</li>
+  //       </ol>
+  //     </>
+  //   ),
+  // },
   {
     title: "Experience",
     value: "experience",

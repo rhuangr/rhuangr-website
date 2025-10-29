@@ -8,4 +8,6 @@
 
 - Before using tailwind css classNames, make sure to first use variables within src/index.css to ensure consistency
 
+- AVOID nested divs at ALL COST unless absolutely necessary for layout purposes.
+
 - Avoid using style={{}} inline styles unless absolutely necessary. Always prefer using tailwind css classNames or css variables defined in src/index.css.

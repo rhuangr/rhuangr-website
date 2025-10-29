@@ -11,15 +11,15 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RhuangrContextProvider>
         <div className="flex h-screen w-full flex-col overflow-hidden">
-          <Header />
           <div className="relative flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex w-full max-w-2xl ml-auto mr-115 flex-col">
-              <div className="px-4 py-8 sm:px-6">
+            <div className="flex w-full max-w-lg mx-auto flex-col">
+              <div className=" y-8 sm:px-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                 >
+                  <Header />
                   <About />
                 </motion.div>
               </div>
@@ -28,7 +28,7 @@ function App() {
             <div className="sticky bottom-0 left-0 right-0 pointer-events-none">
               <GradualBlur
                 position="bottom"
-                height="2rem"
+                height="3rem"
                 strength={0.5}
                 zIndex={10}
               />

@@ -73,7 +73,7 @@ body {
   font-size: var(--font-size-body);
   font-weight: 400;
   /* font-family: system-ui, "Uncut Sans", 'Inter', sans-serif; */
-  font-family: var(--font-family-inter);
+  font-family: var(--font-family-geist);
   color: var(--foreground);
   line-height: 1.4rem;
   letter-spacing: 0.01em;
@@ -131,6 +131,7 @@ li {
   --font-family-inter: 'Inter', sans-serif;
   --font-family-geist-mono: 'Geist Mono', monospace;
   --font-family-chivo-mono: 'Chivo Mono', monospace;
+  --font-family-geist: 'Geist', sans-serif;
 
 
   --color-amber: var(--amber);
