@@ -1,59 +1,52 @@
 import { ContentBlock } from "./ContentBlock";
-import type { ReactNode } from "react";
+
+type ProjectEntry = {
+  title: string;
+  period: string;
+  description: string;
+};
+
+const projects: ProjectEntry[] = [
+  {
+    title: "Customer Identity Platform",
+    period: "2025",
+    description:
+      "Built an authentication experience for Shopify accounts with a focus on biometric login and recovery flows.",
+  },
+  {
+    title: "Rhuangr GPT",
+    period: "2024",
+    description:
+      "Shipped an AI-assisted Q&A surface that stitches together personal notes and public research to help recruiters learn more quickly.",
+  },
+  {
+    title: "Design System Playground",
+    period: "2023",
+    description:
+      "Developed a modular component playground for rapid prototyping with automated accessibility checks and snapshot testing.",
+  },
+];
 
 export function Projects() {
   return (
-    <div className="flex">
-      <div className="flex-1 flex flex-col space-y-4">
-        {experiences.map((exp, index) => (
-          <ContentBlock key={index} header={exp.header}>
-            {exp.content}
-          </ContentBlock>
-        ))}
-      </div>
-    </div>
-  ); 
+    <section className="mx-auto w-full max-w-3xl space-y-6 py-10">
+      <h2>Projects</h2>
+      {projects.map((project) => (
+        <ContentBlock
+          key={project.title}
+          header={
+            <div className="flex items-center justify-between gap-4">
+              <span>{project.title}</span>
+              <span className="font-family-geist-mono text-subheading text-muted-foreground">
+                {project.period}
+              </span>
+            </div>
+          }
+        >
+          <p className="text-muted-foreground">{project.description}</p>
+        </ContentBlock>
+      ))}
+      <span data-route-sentinel="true" aria-hidden="true" className="block h-1 w-full" />
+    </section>
+  );
 }
-
-
-type ExperienceType = {
-  header: ReactNode;
-  content: ReactNode;
-};
-
-const experiences: ExperienceType[] = [
-  {
-    header: (
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-        Shopify
-        <img
-          src="Assets/shoppy/svg/shopify_glyph_white.svg"
-          alt="Shopify logo"
-          className="w-5 h-5 ml-1"
-        />
-        </div>
-        <div className="font-family-geist-mono text-subheading">01/2025 - 09/2025</div>
-      </div>
-    ),
-    content:
-      "Engineering Intern - Developed and maintained customer accounts and login systems at Shopify",
-  },
-  {
-    header: (
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-        Shopify
-        <img
-          src="Assets/shoppy/svg/shopify_glyph_white.svg"
-          alt="Shopify logo"
-          className="w-5 h-5 ml-1"
-        />
-        </div>
-        <div>01/2025 - 09/2025</div>
-      </div>
-    ),
-    content:
-      "Engineering Intern - Developed and maintained customer accounts and login systems at Shopify",
-  },
-];

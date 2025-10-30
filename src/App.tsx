@@ -1,51 +1,99 @@
+import { useEffect, useRef, useState } from "react";
+import {
+  BrowserRouter,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { ThemeProvider } from "./components/ui/theme-provider";
-import { About } from "./sections/About/About";
-import { motion } from "framer-motion";
 import { RhuangrContextProvider } from "./sections/About/rhuangrContext";
+import { About } from "./sections/About/About";
+import { Projects } from "./sections/Projects";
+import { Experience } from "./sections/Experience";
 import { RHUANGGPT } from "./sections/About/RHUANGGPT";
-import Header from "./sections/Header/Header";
-import GradualBlur from "./components/ui/progressive-blur";
+import Balatro from "./components/Balatro";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RhuangrContextProvider>
-        <div className="flex h-screen w-full flex-col overflow-hidden">
-          <div className="relative flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex w-full max-w-lg mx-auto flex-col">
-              <div className=" y-8 sm:px-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Header />
-                  <About />
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="sticky bottom-0 left-0 right-0 pointer-events-none">
-              <GradualBlur
-                position="bottom"
-                height="3rem"
-                strength={0.5}
-                zIndex={10}
-              />
-            </div>
-          </div>
-
-          <footer className="flex flex-col w-full items-center bg-background px-4 pb-6 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md">
-              <RHUANGGPT />
-            </div>
-            <div className="mt-4 text-center text-[12px] text-muted-foreground font-[300]">
-              © 2023 - 2024 Richard Huang. All rights reserved.
-            </div>
-          </footer>
-        </div>
+        <BrowserRouter>
+          <AppLayout />
+        </BrowserRouter>
       </RhuangrContextProvider>
     </ThemeProvider>
+  );
+}
+
+function AppLayout() {
+  return (
+    <div className="relative flex flex-col min-h-screen text-foreground selection:bg-orange-600">
+      <div className="fixed h-screen w-full">
+        <Balatro mouseInteraction={false}  />
+      </div>
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 -translate-y-10 z-1">
+        <RHUANGGPT />
+        <div className="text-center text-xs pt-2"> © 2025 Made by Richard Huang</div>
+      </div>
+      <div className="min-h-screen relative w-full ">
+        <div className="fixed left-[8vw] top-1/2 -translate-y-20 z-10 px-20 text-left ">
+          <NavLinks />
+        </div>
+
+        <div className="relative bg-background rounded-b-3xl shadow-xl z-5">
+          <div className="relative w-full text-foreground mb-40 ">
+            <main className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 md:px-0">
+              <Routes>
+                <Route path="/" element={<About />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/experience" element={<Experience />} />
+                <Route path="*" element={<About />} />
+              </Routes>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-muted-foreground"> Still curious? Keeping scrolling</div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function NavLinks() {
+  const links = [
+    { href: "/", label: "home" },
+    { href: "/projects", label: "projects" },
+    { href: "/experience", label: "experience" },
+  ];
+  return (
+    <nav className="flex flex-col gap-4 w-fit">
+      {links.map((link) => (
+        <NavLink
+          key={link.href}
+          to={link.href}
+          className={({ isActive }) =>
+            [
+              "text-body",
+              "transition-colors duration-200",
+              isActive
+                ? "text-foreground font-bold"
+                : "text-muted-foreground font-normal",
+              "hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            ].join(" ")
+          }
+        >
+          {link.label}
+        </NavLink>
+      ))}
+    </nav>
+  );
+}
+
+export function Footer() {
+  return (
+    <>
+      <Balatro mouseInteraction={false} />
+    </>
   );
 }
 

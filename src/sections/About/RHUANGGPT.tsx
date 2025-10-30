@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { GlowEffect } from "../../components/GlowEffect";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 import { useRhuangrContext } from "./rhuangrContext";
@@ -27,13 +25,12 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
   const { isLoading } = useRhuangrContext();
 
   const submitHandler = () => {
-    // Keep a small console trace for development.
     console.log("Submitted prompt:", prompt);
     setPrompt("");
     onSubmit?.(prompt);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (prompt.trim() !== "") {
@@ -43,38 +40,20 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
   };
 
   return (
-    <div className="group relative h-12 w-full max-w-[min(900px,calc(100vw-4rem))] mx-auto transition-all duration-700 ease-in-out pointer-events-auto">
-      <GlowEffect
-        mode="rotate"
-        duration={6}
-        scale={1}
-        blur="soft"
-        className="rounded-xl h-12 w-full opacity-80"
-      />
-      <GlowEffect
-        mode="rotate"
-        blur="medium"
-        colors={["#ff40a0ff", "#e57220ff", "#ffd640ff", "#ff5040ff"]}
-        scale={1}
-        className={`rounded-xl h-12 w-full transition-opacity duration-500 ${
-          isLoading
-            ? "opacity-100 animate-pulse-scale"
-            : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
-        }`}
-      />
-
-      <Textarea
+    <div className="group relative top-1/2 h-12 w-lg w-md max-w-[95vh] mx-auto transition-all duration-700 ease-in-out">
+      <input
         value={prompt}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPrompt(e.target.value)}
+        disabled={isLoading}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Ask me a question..."
-        className="absolute h-12 w-full rounded-xl border-0 pr-14 pl-7"
+        className="focus:outline-none focus:ring-1 ring-indigo-200 absolute placeholder-muted-foreground text-body h-12 w-full rounded-md bg-gray-100/20 border-0 pr-14 pl-7"
       />
 
       <Button
         variant="outline"
         size="icon-sm"
-        className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full"
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full"
         disabled={prompt.trim() === "" || isLoading}
         onClick={submitHandler}
       >
