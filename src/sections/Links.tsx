@@ -3,71 +3,66 @@ import { cn } from "@/lib/utils";
 
 type LinkLayout = "vertical" | "horizontal";
 
+const GITHUB = "https://github.com/rhuangr";
+const LINKEDIN = "https://www.linkedin.com/in/rhuangr";
+const EMAIL = "richardhuang197@gmail.com";
+const RESUME = "/Assets/resume.pdf";
+
 type ContactLinksProps = {
-  github: string;
-  linkedin: string;
-  resume: string;
-  email: string;
   layout?: LinkLayout;
   className?: string;
 };
 
-export function GithubLink({ href }: { href: string }) {
+export function GithubLink() {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="group">
+    <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="group">
       <img
         src="/Assets/github-mark/github-mark-white.svg"
         alt="GitHub"
-        className="w-[13px] h-[13px] filter brightness-60 group-hover:brightness-100 transition-all duration-200"
+        className="w-5 h-5 filter brightness-100 group-hover:brightness-75 transform transition-all duration-200 group-hover:scale-105"
       />
     </a>
   );
 }
 
-export function LinkedinLink({ href }: { href: string }) {
+export function LinkedinLink() {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="group">
+    <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="group">
       <img
         src="/Assets/in-logo/InBug-White.png"
         alt="LinkedIn"
-        className="w-[13px] h-[13px] filter transform-opacity duration-200 brightness-60 group-hover:brightness-100"
+        className="w-5.5 h-5 filter brightness-100 transform transition-all duration-200 group-hover:brightness-75 group-hover:scale-105"
       />
     </a>
   );
 }
 
-export function MailLink({ email }: { email: string }) {
+export function MailLink() {
+  // Use mailto so users can open their default mail client; keep clipboard copy behavior for convenience.
   const handleCopy = () => {
-    navigator.clipboard.writeText(email);
+    try {
+      navigator.clipboard.writeText(EMAIL);
+    } catch (e) {
+      // noop - clipboard may be unavailable in some contexts
+    }
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      className="group transition-all duration-300"
-    >
-      <Mail className="w-[13px] h-[13px] text-muted-foreground hover:text-foreground" />
-    </button>
-  );
-}
-
-export function ResumeLink({ href }: { href: string }) {
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="group">
-      <FolderOpen className="w-[13px] h-[13px] text-muted-foreground hover:text-foreground transition-colors duration-200" />
+    <a href={`mailto:${EMAIL}`} className="group transition-all duration-300" onClick={handleCopy}>
+      <Mail className="w-6 h-6 text-foreground group-hover:text-muted-foreground transform transition-all duration-200 group-hover:scale-105" />
     </a>
   );
 }
 
-export function ContactLinks({
-  github,
-  linkedin,
-  resume,
-  email,
-  layout = "vertical",
-  className,
-}: ContactLinksProps) {
+export function ResumeLink() {
+  return (
+    <a href={RESUME} target="_blank" rel="noopener noreferrer" className="group">
+      <FolderOpen className="w-6 h-6 text-foreground group-hover:text-muted-foreground transform transition-all duration-200 group-hover:scale-105" />
+    </a>
+  );
+}
+
+export function ContactLinks({ layout = "vertical", className }: ContactLinksProps) {
   const isVertical = layout === "vertical";
 
   return (
@@ -79,10 +74,10 @@ export function ContactLinks({
         className
       )}
     >
-      <GithubLink href={github} />
-      <LinkedinLink href={linkedin} />
-      <MailLink email={email} />
-      <ResumeLink href={resume} />
+      <GithubLink />
+      <LinkedinLink />
+      <MailLink />
+      <ResumeLink />
     </div>
   );
 }
