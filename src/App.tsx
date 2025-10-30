@@ -37,20 +37,21 @@ function AppLayout() {
         <div className="text-center text-xs pt-2"> © 2025 Made by Richard Huang</div>
       </div>
       <div className="min-h-screen relative w-full ">
-        <div className="fixed left-0 w-full top-1/2 -translate-y-20 z-10 px-20 text-left ">
+        <div className="fixed left-[8vw] top-1/2 -translate-y-20 z-10 px-20 text-left ">
           <NavLinks />
         </div>
 
         <div className="relative bg-background rounded-b-3xl shadow-xl z-5">
-          <div className="w-full text-foreground mb-40 relative ">
-            <div className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 md:px-0">
+          <div className="relative w-full text-foreground mb-40 ">
+            <main className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 md:px-0">
               <Routes>
                 <Route path="/" element={<About />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/experience" element={<Experience />} />
                 <Route path="*" element={<About />} />
               </Routes>
-            </div>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-muted-foreground"> Still curious? Keeping scrolling</div>
+            </main>
           </div>
         </div>
       </div>
@@ -72,7 +73,7 @@ export function NavLinks() {
           to={link.href}
           className={({ isActive }) =>
             [
-              "text-sm",
+              "text-body",
               "transition-colors duration-200",
               isActive
                 ? "text-foreground font-bold"

@@ -229,7 +229,7 @@ h2 {
   --animate-pulse-scale-mini: pulse-scale-mini 2s ease-in-out infinite;
 }
 
-html, body, #root {
+/* html, body, #root {
   height: 100%;
   overscroll-behavior: none;
-}
+} */

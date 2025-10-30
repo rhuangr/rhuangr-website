@@ -2,12 +2,9 @@ import { ContactLinks } from "../Links";
 
 export function About() {
   return (
-    <section className="mx-auto w-full space-y-8 py-10">
-      <header>
-        <h1 className="text-[28px] font-[700] ">
-          Hello, I'm Richard <span className="rotate-90"> :{")"}</span>
-        </h1>
-      </header>
+    <section className="mx-auto w-full space-y-8">
+      <h1 className="text-[22px] font-[700] pb-5">Hello, I'm Richard :{")"}</h1>
+
       <section>
         <h2>About</h2>
         <div>I'm a software engineer based in Montreal, Canada.</div>
@@ -38,7 +35,16 @@ export function About() {
           on Customer Accounts and Login
         </div>
       </section>
-      <section>
+      {/* <section>
+       <h2>Other</h2>
+        <div>
+          Almost a professional League of Legends player.
+          <br />
+          Like to sing and play the piano
+        </div>
+        </section> */}
+      <section className="pt-5">
+        
         <ContactLinks layout="horizontal" />
       </section>
     </section>
