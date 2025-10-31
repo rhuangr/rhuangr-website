@@ -1,4 +1,4 @@
-import { ContactLinks } from "../Links";
+import { ContactLinks } from "../ContactLinks";
 import { HighlightedText } from "../utils/utils";
 import { motion } from "framer-motion";
 
@@ -6,18 +6,21 @@ export function About() {
   return (
     <section className="mx-auto w-full space-y-8">
       <motion.h1
-        animate={{ y: -10}}
-        initial={{ y: 0 }}
-        transition={{ duration: 1.5, type: "spring", bounce: 0.75 }}
-        className="text-[22px] font-[700] pb-1"
+        initial={{opacity: 0 }}
+        animate={{opacity: 1 }}
+        transition={{
+          duration: 0.2,
+        }}
+        className="origin-center text-[22px] font-[700] pb-1 w-fit text-left"
       >
         Hello, I'm Richard
         <motion.span
-          animate={{ rotate: 93 }}
+          animate={{ rotate: 96 }}
           transition={{
             duration: 1.2,
             type: "spring",
-            delay: 0.5,
+            stiffness: 200,
+            delay: 0.7,
           }}
           className="inline-block"
           initial={{ rotate: 0 }}

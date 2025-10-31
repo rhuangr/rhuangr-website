@@ -79,6 +79,11 @@ body {
   letter-spacing: -0.01rem;
 }
 
+h1 {
+  @apply text-[22px] font-[700] pb-1 w-fit text-left pb-6;
+}
+
+
 h2 {
   font-size: var(--font-size-subheading);
   font-weight: 400;
@@ -153,7 +158,7 @@ h2 {
 
 .dark {
   --background: oklch(14.074% 0.03733 319.67);
-  --foreground: oklch(98.194% 0.03548 98.423);
+  --foreground: oklch(100% 0.00011 271.152);
   --card: oklch(23.169% 0.02513 294.933/0.99);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);

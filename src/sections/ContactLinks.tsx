@@ -41,7 +41,7 @@ export function ContactLinks() {
             target={link.href.startsWith("mailto:") || link.download ? undefined : "_blank"}
             rel={link.href.startsWith("mailto:") || link.download ? undefined : "noopener noreferrer"}
             download={link.download ? true : undefined}
-            className="group flex items-center w-fit h-6.75 px-3 py-2 bg-gray-100/10  border-1 border-gray-50/10 rounded-sm transform hover:rotate-3 hover:scale-110 ease-in-out transition-colors transition-transform duration-400 hover:bg-orange-500"
+            className="group flex items-center w-fit h-6.75 px-3 py-2 bg-gray-400/10 border-1 border-gray-50/10 rounded-sm transform hover:rotate-3 hover:scale-110 ease-in-out transition-colors transition-transform duration-400 hover:bg-orange-500"
           >
             <span className="text-foreground text-xs">{link.label}</span>
             <Icon className="w-4 h-4 pl-1 text-foreground transition-transform duration-150 group-hover:scale-135" />

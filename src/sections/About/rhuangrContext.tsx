@@ -1,26 +1,36 @@
-import React, { createContext, useContext, useState } from "react";
-import { useOpenAI } from "./useOpenAi";
-import type {ReactNode} from "react";
-
-
+import React, { createContext, useContext, useMemo } from "react";
+import { useAI } from "./useAI";
 
 type rhuangrContextType = {
   isLoading: boolean;
   error: string | null;
-  output: string | null;
-  paths: Map<string, ReactNode>;
+  parsedOutput: {
+    heading: string;
+    paragraphs: { subheading: string; content: string }[];
+  } | null;
   submitPrompt: (prompt: string) => Promise<void>;
 };
 
 const rhuangrContext = createContext<rhuangrContextType | undefined>(undefined);
 
-export const RhuangrContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isLoading, error, output, submitPrompt } = useOpenAI();
+export const RhuangrContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const { isLoading, error, output, submitPrompt } = useAI();
 
-  const paths = new Map<string, ReactNode>();
+  const parsedOutput = useMemo(() => {
+    if (!output) {
+      return null;
+    }
+    return JSON.parse(output.response);
+  }, [output]);
 
   return (
-    <rhuangrContext.Provider value={{ isLoading, error, output, submitPrompt, paths }}>
+    <rhuangrContext.Provider
+      value={{ isLoading, error, submitPrompt, parsedOutput }}
+    >
       {children}
     </rhuangrContext.Provider>
   );
@@ -29,7 +39,17 @@ export const RhuangrContextProvider = ({ children }: { children: React.ReactNode
 export const useRhuangrContext = () => {
   const context = useContext(rhuangrContext);
   if (context === undefined) {
-    throw new Error("useRhuangrContext must be used within an rhuangrContextProvider");
+    throw new Error(
+      "useRhuangrContext must be used within an rhuangrContextProvider"
+    );
   }
   return context;
 };
+
+export interface LLMOutputType {
+  heading: string;
+  paragraphs: {
+    subheading: string;
+    content: string;
+  }[];
+}

@@ -1,19 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  BrowserRouter,
-  NavLink,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { RhuangrContextProvider } from "./sections/About/rhuangrContext";
-import { About } from "./sections/About/About";
-import { Projects } from "./sections/Projects";
-import { Experience } from "./sections/Experience";
+import { NavLinks } from "./components/NavLinks";
+import AppRoutes from "./AppRoutes";
 import { RHUANGGPT } from "./sections/About/RHUANGGPT";
 import Balatro from "./components/Balatro";
-import {motion } from "framer-motion";
+// 'motion' removed because it was unused in this file
 
 function App() {
   return (
@@ -45,56 +38,13 @@ function AppLayout() {
         <div className="relative bg-background rounded-b-3xl shadow-lg/20 z-5">
           <div className="relative w-full text-foreground mb-40 ">
             <main className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 pb-7 md:px-0">
-              <Routes>
-                <Route path="/" element={<About />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/experience" element={<Experience />} />
-                <Route path="/*" element={<About />} />
-              </Routes>
+              <AppRoutes />
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-muted-foreground"> Still curious? Keeping scrolling</div>
             </main>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-export function NavLinks() {
-  const links = [
-    { href: "/", label: "home" },
-    { href: "/projects", label: "projects" },
-    { href: "/experience", label: "experience" },
-  ];
-  return (
-    <nav className="flex flex-col gap-4 w-fit">
-      {links.map((link) => (
-        <NavLink
-          key={link.href}
-          to={link.href}
-          className={({ isActive }) =>
-            [
-              "text-body",
-              "transition-colors duration-200",
-              isActive
-                ? "text-foreground font-bold"
-                : "text-muted-foreground font-normal",
-              "hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-            ].join(" ")
-          }
-        >
-          {link.label}
-        </NavLink>
-      ))}
-    </nav>
-  );
-}
-
-export function Footer() {
-  return (
-    <>
-      <Balatro mouseInteraction={false} />
-    </>
   );
 }
 
