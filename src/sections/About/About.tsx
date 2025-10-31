@@ -1,9 +1,30 @@
 import { ContactLinks } from "../Links";
+import { HighlightedText } from "../utils/utils";
+import { motion } from "framer-motion";
 
 export function About() {
   return (
     <section className="mx-auto w-full space-y-8">
-      <h1 className="text-[22px] font-[700] pb-5">Hello, I'm Richard :{")"}</h1>
+      <motion.h1
+        animate={{ y: -10}}
+        initial={{ y: 0 }}
+        transition={{ duration: 1.5, type: "spring", bounce: 0.75 }}
+        className="text-[22px] font-[700] pb-1"
+      >
+        Hello, I'm Richard
+        <motion.span
+          animate={{ rotate: 93 }}
+          transition={{
+            duration: 1.2,
+            type: "spring",
+            delay: 0.5,
+          }}
+          className="inline-block"
+          initial={{ rotate: 0 }}
+        >
+          <HighlightedText className="!px-2 pb-1" text=":)" />
+        </motion.span>
+      </motion.h1>
 
       <section>
         <h2>About</h2>
@@ -19,9 +40,7 @@ export function About() {
             Jan-May 2026
           </span>
           Incoming intern at
-          <span className="mx-1 font-[500] bg-orange-600 px-0.5 pb-0.5">
-            Autodesk
-          </span>
+          <HighlightedText text="Autodesk" />
           working on Autodesk Fusion
         </div>
         <div>
@@ -29,9 +48,7 @@ export function About() {
             Jan-Aug 2025
           </span>
           Intern at
-          <span className="mx-1 font-[500] bg-orange-600 px-0.5 pb-0.5">
-            Shopify
-          </span>
+          <HighlightedText text="Shopify" />
           on Customer Accounts and Login
         </div>
       </section>
@@ -43,9 +60,8 @@ export function About() {
           Like to sing and play the piano
         </div>
         </section> */}
-      <section className="pt-5">
-        
-        <ContactLinks layout="horizontal" />
+      <section className="pt-3">
+        <ContactLinks />
       </section>
     </section>
   );
