@@ -1,83 +1,53 @@
-import { Mail, FolderOpen } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-type LinkLayout = "vertical" | "horizontal";
+import { ArrowUpRight, Mail, Download } from "lucide-react";
 
 const GITHUB = "https://github.com/rhuangr";
 const LINKEDIN = "https://www.linkedin.com/in/rhuangr";
 const EMAIL = "richardhuang197@gmail.com";
-const RESUME = "/Assets/resume.pdf";
+const RESUME = "/Assets/RichardHuang-Resume.pdf";
 
-type ContactLinksProps = {
-  layout?: LinkLayout;
-  className?: string;
-};
+const links = [
+  {
+    label: "github",
+    href: GITHUB,
+    icon: ArrowUpRight,
+  },
+  {
+    label: "linkedin",
+    href: LINKEDIN,
+    icon: ArrowUpRight,
+  },
+  {
+    label: "email",
+    href: `mailto:${EMAIL}`,
+    icon: Mail,
+  },
+  {
+    label: "resume",
+    href: RESUME,
+    icon: Download,
+    download: true,
+  },
+];
 
-export function GithubLink() {
+export function ContactLinks() {
   return (
-    <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="group">
-      <img
-        src="/Assets/github-mark/github-mark-white.svg"
-        alt="GitHub"
-        className="w-5 h-5 filter brightness-100 group-hover:brightness-75 transform transition-all duration-200 group-hover:scale-105"
-      />
-    </a>
-  );
-}
-
-export function LinkedinLink() {
-  return (
-    <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="group">
-      <img
-        src="/Assets/in-logo/InBug-White.png"
-        alt="LinkedIn"
-        className="w-5.5 h-5 filter brightness-100 transform transition-all duration-200 group-hover:brightness-75 group-hover:scale-105"
-      />
-    </a>
-  );
-}
-
-export function MailLink() {
-  // Use mailto so users can open their default mail client; keep clipboard copy behavior for convenience.
-  const handleCopy = () => {
-    try {
-      navigator.clipboard.writeText(EMAIL);
-    } catch (e) {
-      // noop - clipboard may be unavailable in some contexts
-    }
-  };
-
-  return (
-    <a href={`mailto:${EMAIL}`} className="group transition-all duration-300" onClick={handleCopy}>
-      <Mail className="w-6 h-6 text-foreground group-hover:text-muted-foreground transform transition-all duration-200 group-hover:scale-105" />
-    </a>
-  );
-}
-
-export function ResumeLink() {
-  return (
-    <a href={RESUME} target="_blank" rel="noopener noreferrer" className="group">
-      <FolderOpen className="w-6 h-6 text-foreground group-hover:text-muted-foreground transform transition-all duration-200 group-hover:scale-105" />
-    </a>
-  );
-}
-
-export function ContactLinks({ layout = "vertical", className }: ContactLinksProps) {
-  const isVertical = layout === "vertical";
-
-  return (
-    <div
-      className={cn(
-        isVertical
-          ? "flex flex-col gap-3"
-          : "flex flex-wrap items-center gap-4",
-        className
-      )}
-    >
-      <GithubLink />
-      <LinkedinLink />
-      <MailLink />
-      <ResumeLink />
+    <div className="flex space-x-2">
+      {links.map((link) => {
+        const Icon = link.icon;
+        return (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.href.startsWith("mailto:") || link.download ? undefined : "_blank"}
+            rel={link.href.startsWith("mailto:") || link.download ? undefined : "noopener noreferrer"}
+            download={link.download ? true : undefined}
+            className="group flex items-center w-fit h-6.75 px-3 py-2 bg-gray-100/10  border-1 border-gray-50/10 rounded-sm transform hover:rotate-3 hover:scale-110 ease-in-out transition-colors transition-transform duration-400 hover:bg-orange-500"
+          >
+            <span className="text-foreground text-xs">{link.label}</span>
+            <Icon className="w-4 h-4 pl-1 text-foreground transition-transform duration-150 group-hover:scale-135" />
+          </a>
+        );
+      })}
     </div>
   );
 }

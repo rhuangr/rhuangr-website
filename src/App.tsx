@@ -13,6 +13,7 @@ import { Projects } from "./sections/Projects";
 import { Experience } from "./sections/Experience";
 import { RHUANGGPT } from "./sections/About/RHUANGGPT";
 import Balatro from "./components/Balatro";
+import {motion } from "framer-motion";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
 
 function AppLayout() {
   return (
-    <div className="relative flex flex-col min-h-screen text-foreground selection:bg-orange-600">
+    <div className="relative flex flex-col min-h-screen text-foreground selection:bg-orange-500 hover:bg-orange-600">
       <div className="fixed h-screen w-full">
         <Balatro mouseInteraction={false}  />
       </div>
@@ -36,19 +37,19 @@ function AppLayout() {
         <RHUANGGPT />
         <div className="text-center text-xs pt-2"> © 2025 Made by Richard Huang</div>
       </div>
-      <div className="min-h-screen relative w-full ">
+      <div className="min-h-screen relative w-full">
         <div className="fixed left-[8vw] top-1/2 -translate-y-20 z-10 px-20 text-left ">
           <NavLinks />
         </div>
 
-        <div className="relative bg-background rounded-b-3xl shadow-xl z-5">
+        <div className="relative bg-background rounded-b-3xl shadow-lg/20 z-5">
           <div className="relative w-full text-foreground mb-40 ">
-            <main className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 md:px-0">
+            <main className="min-h-[95vh] mx-auto max-w-lg flex items-center px-7 pb-7 md:px-0">
               <Routes>
                 <Route path="/" element={<About />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/experience" element={<Experience />} />
-                <Route path="*" element={<About />} />
+                <Route path="/*" element={<About />} />
               </Routes>
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-muted-foreground"> Still curious? Keeping scrolling</div>
             </main>
