@@ -5,7 +5,6 @@ import { NavLinks } from "./components/NavLinks";
 import AppRoutes from "./AppRoutes";
 import { RHUANGGPT } from "./sections/About/RHUANGGPT";
 import Balatro from "./components/Balatro";
-// 'motion' removed because it was unused in this file
 
 function App() {
   return (

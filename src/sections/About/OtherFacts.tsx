@@ -3,7 +3,6 @@ import { Appear } from "../utils/HeadingIcon";
 import { Star, ArrowUpRight } from "lucide-react";
 
 export function OtherFacts() {
-  const learning = ["Operating Systems", "Cooking"];
 
   const games = [
     {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import type { TargetAndTransition } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const spotifyTracks = [
   //bruno

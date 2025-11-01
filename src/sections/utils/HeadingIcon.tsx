@@ -36,14 +36,6 @@ export const HeadingLightbulb = ({
     return () => clearTimeout(timer);
   }, [shakeDuration]);
 
-  const rotate = [];
-  const rotateAmount = 10;
-
-  for (let i = 0; i < 3; i++) {
-    rotate.push(-rotateAmount);
-    rotate.push(rotateAmount);
-  }
-
   return (
     <AnimatePresence mode="wait">
       <div className="inline-block h-7">
