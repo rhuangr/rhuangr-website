@@ -35,7 +35,7 @@ function AppLayout() {
       <div className="min-h-screen relative w-full">
         <div className="relative bg-background rounded-b-3xl shadow-lg/20 z-5">
           <div className="relative w-full text-foreground mb-40 ">
-            <main className="min-h-[95vh] mx-auto max-w-2xl grid grid-cols-2 grid-cols-[1fr_3fr] items-center px-7 pb-7 md:px-0 relative pt-20 pb-20">
+            <main className="min-h-[95vh] mx-auto max-w-2xl grid grid-cols-2 grid-cols-[2fr_5fr] items-center px-7 pb-7 md:px-0 relative pt-20 pb-20">
               <div className="col-1 fixed mb-5">
                 <NavLinks />
               </div>

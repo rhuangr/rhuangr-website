@@ -10,6 +10,8 @@ import {
   type LLMOutputType,
 } from "@/sections/About/rhuangrContext";
 import { StaggeredContent } from "@/sections/utils/StaggeredContent";
+import { Bot, CookingPot, CircleQuestionMark} from "lucide-react";
+import { Appear, Shake } from "./sections/utils/HeadingIcon";
 
 export default function AppRoutes() {
   return (
@@ -63,13 +65,27 @@ const DynamicRoute = () => {
 };
 
 const ERROR404Page = () => {
-  return <div>ERROR 404 PAGE NOT FOUND!!</div>;
+  return (
+    <div>
+      <h1>
+        There's nothing here...{" "}
+        <Appear>
+          <CircleQuestionMark size={27} />
+        </Appear>
+      </h1>
+    </div>
+  );
 };
 
 const LoadingPage = () => {
   return (
     <div className="w-full flex flex-col">
-      <h1>Cooking something special...</h1>
+      <h1>
+        Cooking something special...
+        <Shake infinite>
+          <CookingPot size={27} />
+        </Shake>
+      </h1>
       <Skeleton className="h-3 w-full mb-2 bg-card mt-5" />
       <Skeleton className="h-3 w-5/6 mb-2 bg-card/80" />
       <Skeleton className="h-3 w-2/3 mb-2 bg-card/60" />
@@ -84,6 +100,9 @@ function formatResponse(parsed: LLMOutputType): ReactNode {
   const children = [
     <h1 key="heading" className="text-heading text">
       {parsed.heading}
+      <Appear>
+        <Bot size={27} />
+      </Appear>
     </h1>,
     ...parsed.paragraphs.map((p, index) => (
       <div key={index}>

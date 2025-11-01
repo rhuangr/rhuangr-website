@@ -20,7 +20,7 @@ const timeline: ProjectEntry[] = [
   {
     projectName: "Game Resume",
     summary: "Resume website designed as an interactive game experience.",
-    skills: ["TypeScript", "Next.js", "Storybook", "Supabase"],
+    skills: ["Unity", "C#"],
     link: "https://rhuangr.github.io/rhuang-Game-Resume/",
   },
 ];
@@ -28,7 +28,7 @@ const timeline: ProjectEntry[] = [
 export function Projects() {
   return (
     <section className="mx-auto w-full space-y-6.5">
-      <h1 className="flex ">
+      <h1 className="flex items-center">
         Projects <HeadingLightbulb shakeDuration={0.5} />
       </h1>
       {timeline.map((item) => (

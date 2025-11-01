@@ -1,27 +1,19 @@
 import { ContactLinks } from "../ContactLinks";
 import { HighlightedText } from "../utils/HighlightedText";
-import { motion } from "framer-motion";
 import { HeadingSmiley } from "../utils/HeadingIcon";
 
 export function About() {
   return (
     <section className="mx-auto w-full space-y-6.5">
-      <motion.h1
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: 0.2,
-        }}
-        className="origin-center text-[22px] font-[700] pb-1 w-fit text-left"
-      >
+      <h1 className="origin-center text-[22px] font-[700] pb-1 w-fit text-left">
         Hello, I'm Richard
         <HeadingSmiley />
-      </motion.h1>
+      </h1>
 
       <section>
         <h2>About</h2>
         <div>
-          I'm a student majoring in Computer Science at McGill University.
+          I'm a second year Computer Science student at McGill University.
         </div>
         <div>I'm interested in frontend dev, AI and systems engineering.</div>
       </section>

@@ -56,7 +56,7 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
         type="submit"
         variant="outline"
         size="icon-sm"
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full"
+        className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-fushia-500/80`}
         disabled={prompt.trim() === "" || isLoading}
         onClick={submitHandler}
       >

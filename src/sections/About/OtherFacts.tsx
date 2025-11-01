@@ -1,5 +1,5 @@
 import { SpotifyTracks } from "../utils/SpotifyTracks";
-import { GenericHeadingIcon } from "../utils/HeadingIcon";
+import { Appear } from "../utils/HeadingIcon";
 import { Star, ArrowUpRight } from "lucide-react";
 
 export function OtherFacts() {
@@ -25,17 +25,17 @@ export function OtherFacts() {
   return (
     <section className="mx-auto space-y-6.5">
       <h1 className="flex items-center">
-        Other Facts <GenericHeadingIcon>
+        Other Facts{" "}
+        <Appear delay={0.5}>
           <Star size={24} />
-        </GenericHeadingIcon>
+        </Appear>
       </h1>
 
       <section>
         <h2>Things I'm Learning</h2>
         <ul className="list-disc list-inside">
-          {learning.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
+          <li>How to cook</li>
+          <li>Operating Systems</li>
         </ul>
       </section>
 

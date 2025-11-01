@@ -12,6 +12,8 @@ type rhuangrContextType = {
 };
 
 const rhuangrContext = createContext<rhuangrContextType | undefined>(undefined);
+
+//  For changing loading state in Balatro background without rerendering
 const LoadingContext = createContext<{ getIsLoading: () => boolean } | null>(
   null,
 );

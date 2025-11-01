@@ -46,58 +46,71 @@ export const HeadingLightbulb = ({
 
   return (
     <AnimatePresence mode="wait">
-      <div className="inline-block ml-2 h-7">
+      <div className="inline-block h-7">
         {isOn ? (
-          <motion.div
-            key="on"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-            transition={{
-              duration: 0.15,
-              type: "spring",
-              stiffness: 260,
-              damping: 15,
-            }}
-          >
+          <Appear duration={0.2}>
             <Lightbulb
-              size={6}
-              className=" size-7 py-0.5 transform rotate-3 bg-orange-500"
+              className=" size-7 bg-orange-500"
             />
-          </motion.div>
+          </Appear>
         ) : (
-          <motion.div
-            key="off"
-            animate={{
-              rotate: [...rotate, 0],
-            }}
-            transition={{
-              duration: shakeDuration,
-              repeat: 0,
-            }}
-          >
-            <LightbulbOff className="size-6.5 py-0.5" />
-          </motion.div>
+          <Shake key="off" shakeDuration={shakeDuration} rotateAmount={10} repeat={3}>
+            <LightbulbOff className="size-7" />
+          </Shake>
         )}
       </div>
     </AnimatePresence>
   );
 };
 
-export const GenericHeadingIcon = ({
+export const Shake = ({
   children,
+  shakeDuration = 0.5,
+  rotateAmount = 10,
+  repeat = 3,
+  infinite = false,
 }: {
   children: React.ReactNode;
+  shakeDuration?: number;
+  rotateAmount?: number;
+  repeat?: number;
+  infinite?: boolean;
+}) => {
+  const rotate: number[] = [];
+  for (let i = 0; i < repeat; i++) {
+    rotate.push(-rotateAmount);
+    rotate.push(rotateAmount);
+  }
+
+  return (
+    <motion.div
+      animate={{ rotate: [...rotate, 0] }}
+      transition={{ duration: shakeDuration, repeat: infinite ? Infinity : 0 }}
+      className="inline-flex items-center justify-center ml-2"
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const Appear = ({
+  children,
+  duration = 0.5,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  duration?: number;
+  delay?: number;
 }) => {
   return (
     <motion.span
       transition={{
-        duration: 0.5,
+        duration,
         type: "spring",
         damping: 9,
-        delay: 0.5,
+        delay,
       }}
-      className="inline-flex items-center justify-center bg-orange-500 size-7 ml-2"
+      className="inline-flex items-center justify-center bg-orange-500 p-0.5 ml-2"
       initial={{ scale: 0 }}
       animate={{ scale: 1, rotate: 3 }}
     >
