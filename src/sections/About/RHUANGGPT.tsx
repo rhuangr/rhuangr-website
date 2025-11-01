@@ -44,13 +44,16 @@ const AITextArea = ({ onSubmit }: AITextAreaProps) => {
       <input
         value={prompt}
         disabled={isLoading}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setPrompt(e.target.value)
+        }
         onKeyDown={handleKeyDown}
         placeholder="Ask me a question..."
-        className="backdrop-blur-md shadow-md/20 focus:outline-none focus:ring-1 ring-indigo-200 absolute placeholder-muted-foreground text-subheading h-11 w-full rounded-lg bg-gray-100/10 border-1 border-red-50/10 pr-14 pl-7"
+        className="backdrop-blur-md shadow-xl focus:outline-none focus:ring-1 ring-indigo-200 absolute placeholder-muted-foreground text-subheading h-11 w-full rounded-lg bg-gray-100/10 border-1 border-red-50/10 pr-14 pl-7"
       />
 
       <Button
+        type="submit"
         variant="outline"
         size="icon-sm"
         className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full"

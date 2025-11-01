@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef } from "react";
 import { useAI } from "./useAI";
 
 type rhuangrContextType = {
@@ -12,6 +12,17 @@ type rhuangrContextType = {
 };
 
 const rhuangrContext = createContext<rhuangrContextType | undefined>(undefined);
+const LoadingContext = createContext<{ getIsLoading: () => boolean } | null>(
+  null,
+);
+
+export const useLoadingContext = () => {
+  const context = useContext(LoadingContext);
+  if (!context) {
+    throw new Error("useLoadingContext must be used within the RhuangrContextProvider");
+  }
+  return context;
+};
 
 export const RhuangrContextProvider = ({
   children,
@@ -19,6 +30,11 @@ export const RhuangrContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { isLoading, error, output, submitPrompt } = useAI();
+  const isLoadingRef = useRef(isLoading);
+
+  useEffect(() => {
+    isLoadingRef.current = isLoading;
+  }, [isLoading]);
 
   const parsedOutput = useMemo(() => {
     if (!output) {
@@ -27,12 +43,21 @@ export const RhuangrContextProvider = ({
     return JSON.parse(output.response);
   }, [output]);
 
+  const loadingValue = useMemo(
+    () => ({
+      getIsLoading: () => isLoadingRef.current,
+    }),
+    [],
+  );
+
   return (
-    <rhuangrContext.Provider
-      value={{ isLoading, error, submitPrompt, parsedOutput }}
-    >
-      {children}
-    </rhuangrContext.Provider>
+    <LoadingContext.Provider value={loadingValue}>
+      <rhuangrContext.Provider
+        value={{ isLoading, error, submitPrompt, parsedOutput }}
+      >
+        {children}
+      </rhuangrContext.Provider>
+    </LoadingContext.Provider>
   );
 };
 

@@ -1,0 +1,66 @@
+import { SpotifyTracks } from "../utils/SpotifyTracks";
+import { GenericHeadingIcon } from "../utils/HeadingIcon";
+import { Star, ArrowUpRight } from "lucide-react";
+
+export function OtherFacts() {
+  const learning = ["Operating Systems", "Cooking"];
+
+  const games = [
+    {
+      name: "Slay the Spire",
+      href: "https://store.steampowered.com/app/646570/Slay_the_Spire/",
+      rel: "noopener noreferrer",
+    },
+    {
+      name: "League of Legends",
+      href: "https://www.leagueoflegends.com/",
+    },
+    {
+      name: "Baldur's Gate 3",
+      href: "https://baldursgate3.game/",
+      rel: "noopener noreferrer",
+    },
+  ];
+
+  return (
+    <section className="mx-auto space-y-6.5">
+      <h1 className="flex items-center">
+        Other Facts <GenericHeadingIcon>
+          <Star size={24} />
+        </GenericHeadingIcon>
+      </h1>
+
+      <section>
+        <h2>Things I'm Learning</h2>
+        <ul className="list-disc list-inside">
+          {learning.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Games I like</h2>
+        <ul className="list-disc list-inside">
+          {games.map((g) => (
+            <li key={g.name}>
+              <a
+                className="underline hover:text-orange-500 transition-colors"
+                href={g.href}
+                target="_blank"
+              >
+                {g.name}
+                <ArrowUpRight className="inline ml-1" size={12} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Music I like</h2>
+        <SpotifyTracks />
+      </section>
+    </section>
+  );
+}

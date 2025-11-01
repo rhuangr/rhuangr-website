@@ -1,52 +1,53 @@
-import { ContentBlock } from "./ContentBlock";
+import { SkillList } from "./utils/SkillsList";
+import { HighlightedText } from "./utils/HighlightedText";
+import { HeadingLightbulb } from "./utils/HeadingIcon";
 
 type ProjectEntry = {
-  title: string;
-  period: string;
-  description: string;
+  projectName: string;
+  summary: string;
+  skills: string[];
+  link: string;
 };
 
-const projects: ProjectEntry[] = [
+const timeline: ProjectEntry[] = [
   {
-    title: "Customer Identity Platform",
-    period: "2025",
-    description:
-      "Built an authentication experience for Shopify accounts with a focus on biometric login and recovery flows.",
+    projectName: "AI Maze Runner",
+    summary:
+      "Lightweight reinforcement learning program to train agents to cooperate and navigate mazes.",
+    skills: ["Python", "Pytorch", "Numpy"],
+    link: "https://github.com/rhuangr/MARL-Maze",
   },
   {
-    title: "Rhuangr GPT",
-    period: "2024",
-    description:
-      "Shipped an AI-assisted Q&A surface that stitches together personal notes and public research to help recruiters learn more quickly.",
-  },
-  {
-    title: "Design System Playground",
-    period: "2023",
-    description:
-      "Developed a modular component playground for rapid prototyping with automated accessibility checks and snapshot testing.",
+    projectName: "Game Resume",
+    summary: "Resume website designed as an interactive game experience.",
+    skills: ["TypeScript", "Next.js", "Storybook", "Supabase"],
+    link: "https://rhuangr.github.io/rhuang-Game-Resume/",
   },
 ];
 
 export function Projects() {
   return (
-    <section className="mx-auto w-full max-w-3xl space-y-6 py-10">
-      <h2>Projects</h2>
-      {projects.map((project) => (
-        <ContentBlock
-          key={project.title}
-          header={
-            <div className="flex items-center justify-between gap-4">
-              <span>{project.title}</span>
-              <span className="font-family-geist-mono text-subheading text-muted-foreground">
-                {project.period}
-              </span>
-            </div>
-          }
-        >
-          <p className="text-muted-foreground">{project.description}</p>
-        </ContentBlock>
+    <section className="mx-auto w-full space-y-6.5">
+      <h1 className="flex ">
+        Projects <HeadingLightbulb shakeDuration={0.5} />
+      </h1>
+      {timeline.map((item) => (
+        <article key={`${item.projectName}`} className="">
+          <header className="flex justify-between">
+            <h2 className="text-heading font-[700] text-foreground">
+              {item.projectName}
+            </h2>
+          </header>
+          <p className="text-foreground">{item.summary}</p>
+          <HighlightedText
+            tilt
+            text="Check it out"
+            className="mt-1.5"
+            href={item.link}
+          />
+          <SkillList items={item.skills} />
+        </article>
       ))}
-      <span data-route-sentinel="true" aria-hidden="true" className="block h-1 w-full" />
     </section>
   );
 }

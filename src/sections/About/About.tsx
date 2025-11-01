@@ -1,58 +1,45 @@
 import { ContactLinks } from "../ContactLinks";
-import { HighlightedText } from "../utils/utils";
+import { HighlightedText } from "../utils/HighlightedText";
 import { motion } from "framer-motion";
+import { HeadingSmiley } from "../utils/HeadingIcon";
 
 export function About() {
   return (
-    <section className="mx-auto w-full space-y-8">
+    <section className="mx-auto w-full space-y-6.5">
       <motion.h1
-        initial={{opacity: 0 }}
-        animate={{opacity: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{
           duration: 0.2,
         }}
         className="origin-center text-[22px] font-[700] pb-1 w-fit text-left"
       >
         Hello, I'm Richard
-        <motion.span
-          animate={{ rotate: 96 }}
-          transition={{
-            duration: 1.2,
-            type: "spring",
-            stiffness: 200,
-            delay: 0.7,
-          }}
-          className="inline-block"
-          initial={{ rotate: 0 }}
-        >
-          <HighlightedText className="!px-2 pb-1" text=":)" />
-        </motion.span>
+        <HeadingSmiley />
       </motion.h1>
 
       <section>
         <h2>About</h2>
-        <div>I'm a software engineer based in Montreal, Canada.</div>
         <div>
-          I'm interested in frontend dev, data, AI and systems engineering.
+          I'm a student majoring in Computer Science at McGill University.
         </div>
+        <div>I'm interested in frontend dev, AI and systems engineering.</div>
       </section>
       <section>
-        <h2>Work</h2>
+        <h2>Experience</h2>
         <div>
           <span className=" font-geist-mono text-muted-foreground mr-2">
             Jan-May 2026
           </span>
-          Incoming intern at
+          Incoming Backend Intern at
           <HighlightedText text="Autodesk" />
-          working on Autodesk Fusion
         </div>
         <div>
           <span className=" font-geist-mono text-muted-foreground mr-2">
-            Jan-Aug 2025
+            Jan-Sep 2025
           </span>
-          Intern at
+          Engineering Intern at
           <HighlightedText text="Shopify" />
-          on Customer Accounts and Login
         </div>
       </section>
       {/* <section>

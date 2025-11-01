@@ -1,5 +1,6 @@
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { useLoadingContext } from '../sections/About/rhuangrContext';
 
 interface BalatroProps {
   spinRotation?: number;
@@ -131,9 +132,35 @@ export default function RecBalatro({
   pixelFilter = 745.0,
   spinEase = 1.0,
   isRotate = false,
-  mouseInteraction = true
 }: BalatroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { getIsLoading } = useLoadingContext();
+  const speedRef = useRef(spinSpeed);
+  const currentColorsRef = useRef({
+    color1: new Float32Array(hexToVec4(color1)),
+    color2: new Float32Array(hexToVec4(color2)),
+    color3: new Float32Array(hexToVec4(color3))
+  });
+  const lastTimeRef = useRef<number | null>(null);
+
+  const baseColors = useMemo(
+    () => ({
+      color1: hexToVec4(color1),
+      color2: hexToVec4(color2),
+      color3: hexToVec4(color3)
+    }),
+    [color1, color2, color3]
+  );
+
+  const loadingColors = useMemo(
+    () => ({
+      color1: hexToVec4('#ffd467ff'),
+      color2: hexToVec4('#ff6c71ff'),
+    }),
+    []
+  );
+
+  const loadingSpinSpeed = useMemo(() => spinSpeed * 1.8, [spinSpeed]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -154,6 +181,12 @@ export default function RecBalatro({
     resize();
 
     const geometry = new Triangle(gl);
+    const initialColors = {
+      color1: new Float32Array(baseColors.color1),
+      color2: new Float32Array(baseColors.color2),
+      color3: new Float32Array(baseColors.color3)
+    };
+    currentColorsRef.current = initialColors;
     program = new Program(gl, {
       vertex: vertexShader,
       fragment: fragmentShader,
@@ -165,9 +198,9 @@ export default function RecBalatro({
         uSpinRotation: { value: spinRotation },
         uSpinSpeed: { value: spinSpeed },
         uOffset: { value: offset },
-        uColor1: { value: hexToVec4(color1) },
-        uColor2: { value: hexToVec4(color2) },
-        uColor3: { value: hexToVec4(color3) },
+        uColor1: { value: initialColors.color1 },
+        uColor2: { value: initialColors.color2 },
+        uColor3: { value: initialColors.color3 },
         uContrast: { value: contrast },
         uLighting: { value: lighting },
         uSpinAmount: { value: spinAmount },
@@ -181,27 +214,37 @@ export default function RecBalatro({
     const mesh = new Mesh(gl, { geometry, program });
     let animationFrameId: number;
 
+    speedRef.current = spinSpeed;
+    lastTimeRef.current = null;
+
     function update(time: number) {
       animationFrameId = requestAnimationFrame(update);
+      const isLoading = getIsLoading();
+      const lastTime = lastTimeRef.current;
+      const deltaMs = lastTime === null ? 16 : time - lastTime;
+      lastTimeRef.current = time;
+      const delta = Math.min(deltaMs / 1000, 0.1);
+      const lerpFactor = 1 - Math.exp(-3 * delta);
+
+      const targetColors = isLoading ? loadingColors : baseColors;
+      const colors = currentColorsRef.current;
+      for (let i = 0; i < 15; i += 1) {
+        colors.color1[i] += (targetColors.color1[i] - colors.color1[i]) * lerpFactor;
+        colors.color2[i] += (targetColors.color2[i] - colors.color2[i]) * lerpFactor;
+      }
+      program.uniforms.uColor1.value = colors.color1;
+      program.uniforms.uColor2.value = colors.color2;
+      program.uniforms.uColor3.value = colors.color3;
+
       program.uniforms.iTime.value = time * 0.001;
       renderer.render({ scene: mesh });
     }
     animationFrameId = requestAnimationFrame(update);
     container.appendChild(gl.canvas);
 
-    function handleMouseMove(e: MouseEvent) {
-      if (!mouseInteraction) return;
-      const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
-      program.uniforms.uMouse.value = [x, y];
-    }
-    container.addEventListener('mousemove', handleMouseMove);
-
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resize);
-      container.removeEventListener('mousemove', handleMouseMove);
       container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
@@ -209,16 +252,16 @@ export default function RecBalatro({
     spinRotation,
     spinSpeed,
     offset,
-    color1,
-    color2,
-    color3,
     contrast,
     lighting,
     spinAmount,
     pixelFilter,
     spinEase,
     isRotate,
-    mouseInteraction
+    baseColors,
+    loadingColors,
+    getIsLoading,
+    loadingSpinSpeed
   ]);
 
   return <div ref={containerRef} className="w-full h-full" />;
